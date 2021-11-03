@@ -1,4 +1,4 @@
-package ru.orlovvv.weather.data.entities
+package ru.orlovvv.weather.data.model
 
 data class Day(
     var avghumidity: Double,
