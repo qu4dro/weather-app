@@ -3,4 +3,9 @@
     <string name="home">Home</string>
     <string name="saved">Saved</string>
     <string name="search">Search</string>
+
+    <!--  Hints and texts  -->
+    <string name="check_connection">Check internet connection</string>
+    <string name="settings">Settings</string>
+
 </resources>
