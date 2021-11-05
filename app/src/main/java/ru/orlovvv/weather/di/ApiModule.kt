@@ -1,5 +1,7 @@
 package ru.orlovvv.weather.di
 
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,11 +38,22 @@ class ApiModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(okHttpClient: OkHttpClient, BASE_URL: String): Retrofit = Retrofit.Builder()
-        .addConverterFactory(MoshiConverterFactory.create())
-        .baseUrl(BASE_URL)
-        .client(okHttpClient)
+    fun provideMoshi() = Moshi.Builder()
+        .add(KotlinJsonAdapterFactory())
         .build()
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        moshi: Moshi,
+        BASE_URL: String
+    ): Retrofit =
+        Retrofit.Builder()
+            .addConverterFactory(MoshiConverterFactory.create(moshi))
+            .baseUrl(BASE_URL)
+            .client(okHttpClient)
+            .build()
 
     @Provides
     @Singleton
