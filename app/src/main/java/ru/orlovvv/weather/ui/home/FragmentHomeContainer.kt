@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -12,6 +14,9 @@ import ru.orlovvv.weather.R
 import ru.orlovvv.weather.adapters.HomeSlidePagerAdapter
 import ru.orlovvv.weather.databinding.FragmentHomeContainerBinding
 import ru.orlovvv.weather.utils.Constants.HOME_PAGES
+import ru.orlovvv.weather.utils.Resource
+import ru.orlovvv.weather.viewmodels.ForecastViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
@@ -19,6 +24,8 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     private var _binding: FragmentHomeContainerBinding? = null
     val binding
         get() = _binding!!
+
+    private val forecastViewModel: ForecastViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,11 +39,33 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupUI()
+        setupObservers()
     }
 
     private fun setupUI() {
         setPager()
         setTabs()
+    }
+
+    private fun setupObservers() {
+        forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Loading -> {
+                    Timber.d("Loading")
+                }
+                is Resource.Error -> {
+                    response.message?.let { message ->
+                        Timber.d("An error has occurred: $message")
+                    }
+                }
+                is Resource.Success -> {
+                    response.data?.let {
+                        Timber.d(it.toString())
+                        // submit list
+                    }
+                }
+            }
+        })
     }
 
     private fun setPager() {
