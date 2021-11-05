@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import ru.orlovvv.weather.data.model.ForecastData
@@ -28,12 +29,14 @@ class ForecastViewModel @Inject constructor(
         getForecast()
     }
 
-    fun getForecast() = viewModelScope.launch {
-        _forecast.postValue(Resource.Loading())
+    fun getForecast() = viewModelScope.launch(Dispatchers.IO) {
         try {
+            _forecast.postValue(Resource.Loading())
             if (networkHelper.isNetworkConnected()) {
                 val response = forecastRepository.getForecast("Irkutsk")
                 _forecast.postValue(handleForecastResponse(response))
+            } else {
+                _forecast.postValue(Resource.Error("No internet connection"))
             }
         } catch (e: Exception) {
             _forecast.postValue(Resource.Error("Can not get forecast: ${e.message}"))
@@ -46,7 +49,7 @@ class ForecastViewModel @Inject constructor(
                 return Resource.Success(it)
             }
         }
-        return Resource.Error(response.message())
+        return Resource.Error(response.errorBody().toString())
     }
 
 }
