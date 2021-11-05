@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.orlovvv.weather.data.model.ForecastData
+import ru.orlovvv.weather.data.model.responses.ForecastResponse
 import ru.orlovvv.weather.data.repository.ForecastRepository
 import ru.orlovvv.weather.utils.NetworkHelper
 import ru.orlovvv.weather.utils.Resource
@@ -21,8 +21,8 @@ class ForecastViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private val _forecast = MutableLiveData<Resource<ForecastData>>()
-    val forecast: LiveData<Resource<ForecastData>>
+    private val _forecast = MutableLiveData<Resource<ForecastResponse>>()
+    val forecast: LiveData<Resource<ForecastResponse>>
         get() = _forecast
 
     init {
@@ -43,7 +43,7 @@ class ForecastViewModel @Inject constructor(
         }
     }
 
-    private fun handleForecastResponse(response: Response<ForecastData>): Resource<ForecastData> {
+    private fun handleForecastResponse(response: Response<ForecastResponse>): Resource<ForecastResponse> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)

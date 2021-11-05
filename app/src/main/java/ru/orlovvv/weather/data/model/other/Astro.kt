@@ -1,4 +1,4 @@
-package ru.orlovvv.weather.data.model
+package ru.orlovvv.weather.data.model.other
 
 data class Astro(
     var moon_illumination: String,
