@@ -9,13 +9,13 @@ import ru.orlovvv.weather.utils.Constants.FORECAST_DAYS
 
 interface Api {
 
-    @GET("forecast.json?")
+    @GET("forecast.json")
     suspend fun getForecast(
-        @Query("key") apiKey: String = API_KEY_PUBLIC,
         @Query("q") locationName: String = "",
         @Query("days") days: Int = FORECAST_DAYS,
         @Query("aqi") aqi: String = "no",
-        @Query("alerts") alerts: String = "no"
+        @Query("alerts") alerts: String = "no",
+        @Query("key") apiKey: String = API_KEY_PUBLIC
     ): Response<ForecastData>
 
 }
