@@ -7,4 +7,6 @@ object Constants {
 
     const val FORECAST_DAYS = 7
 
+    const val HOME_PAGES = 3
+
 }

@@ -5,9 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import ru.orlovvv.weather.R
+import ru.orlovvv.weather.adapters.HomeSlidePagerAdapter
 import ru.orlovvv.weather.databinding.FragmentHomeContainerBinding
+import ru.orlovvv.weather.utils.Constants.HOME_PAGES
 
 @AndroidEntryPoint
 class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
@@ -27,6 +31,44 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupUI()
+    }
+
+    private fun setupUI() {
+        setPager()
+        setTabs()
+    }
+
+    private fun setPager() {
+        binding.pager.apply {
+            offscreenPageLimit = HOME_PAGES as Int
+            adapter = HomeSlidePagerAdapter(childFragmentManager, lifecycle)
+
+            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    binding.tabLayout.apply {
+                        selectTab(getTabAt(position))
+                    }
+                }
+            })
+        }
+    }
+
+    private fun setTabs() {
+        binding.tabLayout.apply {
+            addTab(newTab().setText(R.string.today))
+            addTab(newTab().setText(R.string.forecast))
+            addTab(newTab().setText(R.string.history))
+
+            addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+                override fun onTabSelected(tab: TabLayout.Tab) {
+                    binding.pager.currentItem = tab.position
+                }
+
+                override fun onTabUnselected(tab: TabLayout.Tab?) {}
+                override fun onTabReselected(tab: TabLayout.Tab?) {}
+            })
+        }
     }
 
     override fun onDestroyView() {
