@@ -1,4 +1,4 @@
-package ru.orlovvv.weather.ui.search
+package ru.orlovvv.weather.ui.locations
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import ru.orlovvv.weather.R
-import ru.orlovvv.weather.databinding.FragmentSearchBinding
+import ru.orlovvv.weather.databinding.FragmentLocationsBinding
 
-class FragmentSearch : Fragment(R.layout.fragment_search) {
+class FragmentLocations : Fragment(R.layout.fragment_locations) {
 
-    private var _binding: FragmentSearchBinding? = null
+    private var _binding: FragmentLocationsBinding? = null
     val binding
         get() = _binding!!
 
@@ -19,7 +19,7 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        _binding = FragmentLocationsBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -19,20 +19,19 @@
         android:id="@+id/fragmentHomeContainer"
         android:name="ru.orlovvv.weather.ui.home.FragmentHomeContainer"
         android:label="FragmentHomeContainer"
-        tools:layout="@layout/fragment_home_container" />
-    <fragment
-        android:id="@+id/fragmentSaved"
-        android:name="ru.orlovvv.weather.ui.saved.FragmentSaved"
-        android:label="FragmentSaved"
-        tools:layout="@layout/fragment_saved" />
-    <fragment
-        android:id="@+id/fragmentSearch"
-        android:name="ru.orlovvv.weather.ui.search.FragmentSearch"
-        android:label="FragmentSearch"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_home_container" >
+        <action
+            android:id="@+id/action_fragmentHomeContainer_to_fragmentLocations"
+            app:destination="@id/fragmentLocations" />
+    </fragment>
     <fragment
         android:id="@+id/fragmentToday"
         android:name="ru.orlovvv.weather.ui.home.FragmentToday"
         android:label="FragmentToday"
         tools:layout="@layout/fragment_today" />
+    <fragment
+        android:id="@+id/fragmentLocations"
+        android:name="ru.orlovvv.weather.ui.locations.FragmentLocations"
+        android:label="FragmentLocations"
+        tools:layout="@layout/fragment_locations" />
 </navigation>

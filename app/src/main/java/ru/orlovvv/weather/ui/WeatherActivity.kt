@@ -39,19 +39,11 @@ class WeatherActivity : AppCompatActivity() {
 
         _binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setNavController()
-        setNetworkReceiver(makeNetworkSnack())
+        setNetworkReceiver()
     }
 
-    private fun setNavController() {
-        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        binding.bottomNavMenu.apply {
-            setupWithNavController(navController)
-            setOnItemReselectedListener { }
-        }
-    }
-
-    private fun setNetworkReceiver(snack: Snackbar) {
+    private fun setNetworkReceiver() {
+        val snack = makeNetworkSnack()
         networkReceiver = object : NetworkBroadcastReceiver() {
             override fun onNetworkChange() {
                 val status = NetworkHelper(this@WeatherActivity).isNetworkConnected()
@@ -84,7 +76,6 @@ class WeatherActivity : AppCompatActivity() {
             R.string.check_connection,
             Snackbar.LENGTH_INDEFINITE
         ).apply {
-            anchorView = binding.bottomNavMenu
             setAction(R.string.settings) {
                 startActivity(Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS));
                 this.dismiss()
