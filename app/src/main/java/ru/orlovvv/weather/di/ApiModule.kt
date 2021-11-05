@@ -10,6 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import ru.orlovvv.weather.BuildConfig
 import ru.orlovvv.weather.data.api.Api
+import ru.orlovvv.weather.data.api.ApiHelper
+import ru.orlovvv.weather.data.api.ApiHelperImpl
 import javax.inject.Singleton
 
 @Module
@@ -43,4 +45,8 @@ class ApiModule {
     @Provides
     @Singleton
     fun provideApi(retrofit: Retrofit): Api = retrofit.create(Api::class.java)
+
+    @Provides
+    @Singleton
+    fun provideApiHelper(apiHelper: ApiHelperImpl): ApiHelper = apiHelper
 }
