@@ -8,6 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import ru.orlovvv.weather.data.model.other.Current
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
 import ru.orlovvv.weather.data.model.responses.SearchResponse
 import ru.orlovvv.weather.data.repository.ForecastRepository
@@ -29,6 +30,10 @@ class ForecastViewModel @Inject constructor(
     private val _forecast = MutableLiveData<Resource<ForecastResponse>>()
     val forecast: LiveData<Resource<ForecastResponse>>
         get() = _forecast
+
+    private val _today = MutableLiveData<Current>()
+    val today
+        get() = _today
 
     private val _foundedLocations = MutableLiveData<Resource<SearchResponse>>()
     val foundedLocations: LiveData<Resource<SearchResponse>>
@@ -85,7 +90,11 @@ class ForecastViewModel @Inject constructor(
     }
 
     fun setSearchQuery(query: String) {
-        _searchQuery.postValue(query)
+        _searchQuery.value = query
+    }
+
+    fun setToday() {
+        _today.value = forecast.value?.data?.current
     }
 
 }

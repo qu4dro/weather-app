@@ -61,7 +61,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
                 is Resource.Success -> {
                     response.data?.let {
                         Timber.d(it.toString())
-                        // submit list
+                        forecastViewModel.setToday()
                     }
                 }
             }

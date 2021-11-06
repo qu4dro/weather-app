@@ -6,10 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
 import ru.orlovvv.weather.R
 import ru.orlovvv.weather.databinding.FragmentTodayBinding
 import ru.orlovvv.weather.viewmodels.ForecastViewModel
+import timber.log.Timber
 
 @AndroidEntryPoint
 class FragmentToday : Fragment(R.layout.fragment_today) {
@@ -35,6 +37,10 @@ class FragmentToday : Fragment(R.layout.fragment_today) {
     }
 
     private fun setupUI() {
+        binding.apply {
+            lifecycleOwner = this@FragmentToday
+            foreViewModel = forecastViewModel
+        }
     }
 
 
