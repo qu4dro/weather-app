@@ -9,6 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
+import ru.orlovvv.weather.data.model.responses.SearchResponse
 import ru.orlovvv.weather.data.repository.ForecastRepository
 import ru.orlovvv.weather.utils.NetworkHelper
 import ru.orlovvv.weather.utils.Resource
@@ -21,9 +22,17 @@ class ForecastViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
+    private var _searchQuery = MutableLiveData("")
+    val searchQuery
+        get() = _searchQuery
+
     private val _forecast = MutableLiveData<Resource<ForecastResponse>>()
     val forecast: LiveData<Resource<ForecastResponse>>
         get() = _forecast
+
+    private val _foundedLocations = MutableLiveData<Resource<SearchResponse>>()
+    val foundedLocations: LiveData<Resource<SearchResponse>>
+        get() = _foundedLocations
 
     init {
         getForecast()
@@ -36,11 +45,34 @@ class ForecastViewModel @Inject constructor(
                 val response = forecastRepository.getForecast("Irkutsk")
                 _forecast.postValue(handleForecastResponse(response))
             } else {
-                _forecast.postValue(Resource.Error("No internet connection"))
+                _forecast.postValue(Resource.Error("Error"))
             }
         } catch (e: Exception) {
             _forecast.postValue(Resource.Error("Can not get forecast: ${e.message}"))
         }
+    }
+
+    fun searchLocation(searchQuery: String) = viewModelScope.launch(Dispatchers.IO) {
+        try {
+            _foundedLocations.postValue(Resource.Loading())
+            if (networkHelper.isNetworkConnected()) {
+                val response = forecastRepository.searchLocation(searchQuery)
+                _foundedLocations.postValue(handleSearchLocationResponse(response))
+            } else {
+                _foundedLocations.postValue(Resource.Error("Error"))
+            }
+        } catch (e: Exception) {
+            _foundedLocations.postValue(Resource.Error("Can not get forecast: ${e.message}"))
+        }
+    }
+
+    private fun handleSearchLocationResponse(response: Response<SearchResponse>): Resource<SearchResponse> {
+        if (response.isSuccessful) {
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.errorBody().toString())
     }
 
     private fun handleForecastResponse(response: Response<ForecastResponse>): Resource<ForecastResponse> {
@@ -50,6 +82,10 @@ class ForecastViewModel @Inject constructor(
             }
         }
         return Resource.Error(response.errorBody().toString())
+    }
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.postValue(query)
     }
 
 }

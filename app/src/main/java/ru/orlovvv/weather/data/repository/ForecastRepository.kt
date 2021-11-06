@@ -7,4 +7,6 @@ class ForecastRepository @Inject constructor(private val apiHelper: ApiHelper) {
 
     suspend fun getForecast(locationName: String) = apiHelper.getForecast(locationName)
 
+    suspend fun searchLocation(searchQuery: String) = apiHelper.searchLocation(searchQuery)
+
 }
