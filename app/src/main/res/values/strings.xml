@@ -12,5 +12,8 @@
     <string name="history">History</string>
     <string name="select_location">Select location</string>
     <string name="feels_like">Feels like</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="max_temp">Max temp</string>
+    <string name="min_temp">Min temp</string>
 
 </resources>
