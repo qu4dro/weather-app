@@ -48,6 +48,17 @@
                 app:layout_constraintGuide_end="24dp" />
 
             <com.google.android.material.textview.MaterialTextView
+                today="@{null}"
+                android:id="@+id/tv_day_today"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textAppearance="@style/TextAppearance.Weather.Headline6"
+                app:layout_constraintStart_toStartOf="@id/guideline_left"
+                app:layout_constraintTop_toBottomOf="@id/guideline_top"
+                tools:text="Monday" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_current_temp"
                 temperature="@{foreViewModel.forecastCache.current.temp_c}"
                 android:layout_width="wrap_content"
@@ -55,7 +66,7 @@
                 android:layout_marginStart="12dp"
                 android:textAppearance="@style/TextAppearance.Weather.Headline1"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
-                app:layout_constraintTop_toBottomOf="@id/guideline_top"
+                app:layout_constraintTop_toBottomOf="@id/tv_day_today"
                 tools:text="24" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -63,11 +74,11 @@
                 temperatureLike="@{foreViewModel.forecastCache.current.feelslike_c}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="@style/TextAppearance.Weather.Body1"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
                 app:layout_constraintEnd_toEndOf="@id/tv_current_temp"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@id/tv_current_temp"
-                app:layout_constraintTop_toBottomOf="@id/tv_condition"
+                app:layout_constraintTop_toBottomOf="@id/iv_condition"
                 tools:text="Feels like 22" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -75,13 +86,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{foreViewModel.forecastCache.current.condition.text}"
-                android:textAppearance="@style/TextAppearance.Weather.Body1"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="@id/tv_current_temp"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="@id/tv_current_temp"
-                app:layout_constraintTop_toBottomOf="@id/tv_current_temp"
+                app:layout_constraintTop_toTopOf="@id/iv_condition"
+                app:layout_constraintBottom_toBottomOf="@id/iv_condition"
                 tools:text="Sunny" />
+
+            <ImageView
+                android:id="@+id/iv_condition"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:imageUrl="@{foreViewModel.forecastCache.current.condition.icon}"
+                app:layout_constraintTop_toBottomOf="@id/tv_current_temp"
+                app:layout_constraintStart_toEndOf="@id/tv_condition"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <androidx.constraintlayout.widget.Barrier
                 android:id="@+id/id_temperature_barier"
@@ -222,13 +245,12 @@
                         app:constraint_referenced_ids="tv_max_temp_value,tv_min_temp_value" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:nestedScrollingEnabled="false"
                         android:id="@+id/rv_hourly_forecast"
                         hoursList="@{foreViewModel.forecastCache.forecast.forecastday[0].hour}"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:paddingTop="12dp"
+                        android:layout_marginTop="12dp"
+                        android:nestedScrollingEnabled="false"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"

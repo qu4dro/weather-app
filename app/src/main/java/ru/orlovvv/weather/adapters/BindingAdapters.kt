@@ -46,6 +46,13 @@ fun bindHour(textView: MaterialTextView, date: String) {
     textView.text = hourString
 }
 
+@BindingAdapter("today")
+fun bindToday(textView: MaterialTextView, parameter: Int?) {
+    val calendar = Calendar.getInstance()
+    val date = calendar.time
+    textView.text = SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
+}
+
 @BindingAdapter("imageUrl")
 fun bindImage(imgView: ImageView, urlToImage: String?) {
     Glide.with(imgView.context)
@@ -72,11 +79,12 @@ fun bindImage(imgView: ImageView, urlToImage: String?) {
 private fun beautifyTemperature(temp: Double) = temp.roundToInt().toString() + "\u00B0"
 
 private fun formatDateToHour(date: String) : String {
-//    val firstApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-//
-//    val date = LocalDate.parse("2019-08-07 09:00:00" , firstApiFormat)
-
     val outputFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     val inputFormat: DateFormat = SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH)
     return outputFormat.format(inputFormat.parse(date))
+}
+
+private fun formatDateToDayString(date: String) : String {
+    val inputFormat: DateFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
+    return inputFormat.format(date)
 }
