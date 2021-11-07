@@ -214,6 +214,28 @@
                         app:layout_constraintTop_toBottomOf="@id/tv_min_temp"
                         tools:text="23" />
 
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/id_temp_barrier"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="tv_max_temp_value,tv_min_temp_value" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:nestedScrollingEnabled="false"
+                        android:id="@+id/rv_hourly_forecast"
+                        hoursList="@{foreViewModel.forecastCache.forecast.forecastday[0].hour}"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:paddingTop="12dp"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/id_temp_barrier"
+                        tools:listitem="@layout/item_hourly_forecast" />
+
+
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </com.google.android.material.card.MaterialCardView>

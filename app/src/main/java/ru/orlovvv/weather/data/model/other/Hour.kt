@@ -1,5 +1,7 @@
 package ru.orlovvv.weather.data.model.other
 
+import androidx.recyclerview.widget.DiffUtil
+
 data class Hour(
     var chance_of_rain: Int,
     var chance_of_snow: Int,
@@ -35,3 +37,18 @@ data class Hour(
     var windchill_c: Double,
     var windchill_f: Double
 )
+
+object HourCallback : DiffUtil.ItemCallback<Hour>() {
+    override fun areItemsTheSame(
+        oldItem: Hour,
+        newItem: Hour
+    ) =
+        oldItem.time_epoch == newItem.time_epoch
+
+    override fun areContentsTheSame(
+        oldItem: Hour,
+        newItem: Hour
+    ) =
+        oldItem == newItem
+
+}

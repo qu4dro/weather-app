@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DecodeFormat
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -12,8 +13,15 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.textview.MaterialTextView
 import ru.orlovvv.weather.R
+import ru.orlovvv.weather.data.model.other.Hour
 import ru.orlovvv.weather.utils.Res
 import kotlin.math.roundToInt
+
+@BindingAdapter("hoursList")
+fun bindHourlyForecastList(recyclerView: RecyclerView, data: List<Hour>?) {
+    val adapter = recyclerView.adapter as HourlyForecastAdapter
+    adapter.submitList(data)
+}
 
 @BindingAdapter("temperature")
 fun bindTemperature(textView: MaterialTextView, temp: Double) {
