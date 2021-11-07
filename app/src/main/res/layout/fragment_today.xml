@@ -159,7 +159,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:gravity="end"
-                        android:text="@string/sunrise"
+                        android:text="@string/sunset"
                         android:textAppearance="@style/TextAppearance.Weather.Body1"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/tv_sunrise"

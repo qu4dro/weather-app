@@ -15,5 +15,6 @@
     <string name="sunrise">Sunrise</string>
     <string name="max_temp">Max temp</string>
     <string name="min_temp">Min temp</string>
+    <string name="sunset">Sunset</string>
 
 </resources>
