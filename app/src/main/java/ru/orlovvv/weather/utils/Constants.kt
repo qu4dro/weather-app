@@ -9,4 +9,6 @@ object Constants {
 
     const val HOME_PAGES = 3
 
+    const val DATABASE_NAME = "forecast_cache_db.db"
+
 }
