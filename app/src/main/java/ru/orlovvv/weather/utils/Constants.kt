@@ -11,4 +11,6 @@ object Constants {
 
     const val DATABASE_NAME = "forecast_cache_db.db"
 
+    const val DATE_PATTERN = "yyyy-MM-dd HH:mm"
+
 }

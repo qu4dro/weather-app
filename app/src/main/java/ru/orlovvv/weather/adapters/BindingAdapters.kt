@@ -14,7 +14,13 @@ import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.textview.MaterialTextView
 import ru.orlovvv.weather.R
 import ru.orlovvv.weather.data.model.other.Hour
+import ru.orlovvv.weather.utils.Constants.DATE_PATTERN
 import ru.orlovvv.weather.utils.Res
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 import kotlin.math.roundToInt
 
 @BindingAdapter("hoursList")
@@ -32,6 +38,12 @@ fun bindTemperature(textView: MaterialTextView, temp: Double) {
 fun bindTemperatureLike(textView: MaterialTextView, temp: Double) {
     val feelLikeString = Res.getString(R.string.feels_like) + " " + beautifyTemperature(temp)
     textView.text = feelLikeString
+}
+
+@BindingAdapter("hour")
+fun bindHour(textView: MaterialTextView, date: String) {
+    val hourString = formatDateToHour(date)
+    textView.text = hourString
 }
 
 @BindingAdapter("imageUrl")
@@ -58,3 +70,13 @@ fun bindImage(imgView: ImageView, urlToImage: String?) {
 }
 
 private fun beautifyTemperature(temp: Double) = temp.roundToInt().toString() + "\u00B0"
+
+private fun formatDateToHour(date: String) : String {
+//    val firstApiFormat = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+//
+//    val date = LocalDate.parse("2019-08-07 09:00:00" , firstApiFormat)
+
+    val outputFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+    val inputFormat: DateFormat = SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH)
+    return outputFormat.format(inputFormat.parse(date))
+}

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="hour"
             type="ru.orlovvv.weather.data.model.other.Hour" />
@@ -11,14 +13,58 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp">
 
-        <TextView
-            android:text="asdasdasdasda"
-            app:layout_constraintTop_toTopOf="parent"
+        <com.google.android.material.textview.MaterialTextView
+            hour="@{hour.time}"
+            android:textAppearance="@style/TextAppearance.Weather.Body1"
+            android:id="@+id/tv_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/iv_condition"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iv_condition"
+            tools:text="00:00" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:textAppearance="@style/TextAppearance.Weather.Body1"
+            android:id="@+id/tv_temperature"
+            temperature="@{hour.temp_c}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/iv_condition"
+            app:layout_constraintEnd_toStartOf="@id/iv_condition"
             app:layout_constraintStart_toStartOf="parent"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            app:layout_constraintTop_toTopOf="@id/iv_condition"
+            tools:text="12" />
+
+        <ImageView
+            android:id="@+id/iv_condition"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="8dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitXY"
+            app:imageUrl="@{hour.condition.icon}"
+            app:layout_constraintStart_toEndOf="@id/tv_temperature"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:textAppearance="@style/TextAppearance.Weather.Body2"
+            android:id="@+id/tv_condition"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:text="@{hour.condition.text}"
+            app:layout_constraintBottom_toBottomOf="@id/iv_condition"
+            app:layout_constraintStart_toEndOf="@id/iv_condition"
+            app:layout_constraintTop_toTopOf="@id/iv_condition"
+            app:layout_constraintEnd_toStartOf="@id/tv_hour"
+            tools:text="Rainy possible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
