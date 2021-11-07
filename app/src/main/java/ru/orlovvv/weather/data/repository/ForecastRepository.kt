@@ -2,6 +2,7 @@ package ru.orlovvv.weather.data.repository
 
 import ru.orlovvv.weather.data.api.ApiHelper
 import ru.orlovvv.weather.data.db.WeatherDao
+import ru.orlovvv.weather.data.model.other.LocationCacheData
 import javax.inject.Inject
 
 class ForecastRepository @Inject constructor(
@@ -13,4 +14,8 @@ class ForecastRepository @Inject constructor(
 
     suspend fun searchLocation(searchQuery: String) = apiHelper.searchLocation(searchQuery)
 
+    suspend fun insertCache(locationCacheData: LocationCacheData) =
+        weatherDao.clearAndInsertCache(locationCacheData)
+
+    fun getForecastCache(id: Int) = weatherDao.getForecastCache(id)
 }

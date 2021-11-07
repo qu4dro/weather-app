@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import ru.orlovvv.weather.data.model.other.Current
 import ru.orlovvv.weather.data.model.other.Forecast
 import ru.orlovvv.weather.data.model.other.Location
+import ru.orlovvv.weather.data.model.responses.HistoryResponse
 
 class Converters {
 
@@ -29,6 +30,13 @@ class Converters {
     @TypeConverter
     fun stringToLocation(locationString: String): Location =
         Gson().fromJson(locationString, Location::class.java)
+
+    @TypeConverter
+    fun historyToString(history: HistoryResponse): String = Gson().toJson(history)
+
+    @TypeConverter
+    fun stringToHistory(historyString: String): HistoryResponse =
+        Gson().fromJson(historyString, HistoryResponse::class.java)
 
 
 }

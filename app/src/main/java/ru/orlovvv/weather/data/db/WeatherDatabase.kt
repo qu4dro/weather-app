@@ -4,10 +4,12 @@ import android.content.Context
 import androidx.room.*
 import androidx.sqlite.db.SupportSQLiteDatabase
 import ru.orlovvv.weather.data.Converters
+import ru.orlovvv.weather.data.model.other.FoundLocation
+import ru.orlovvv.weather.data.model.other.LocationCacheData
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
 import ru.orlovvv.weather.utils.Constants.DATABASE_NAME
 
-@Database(entities = [ForecastResponse::class], exportSchema = false, version = 1)
+@Database(entities = [LocationCacheData::class, FoundLocation::class], exportSchema = false, version = 1)
 @TypeConverters(Converters::class)
 abstract class WeatherDatabase : RoomDatabase() {
 

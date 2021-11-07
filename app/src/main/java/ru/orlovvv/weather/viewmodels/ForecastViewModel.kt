@@ -9,7 +9,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import ru.orlovvv.weather.data.model.other.Current
+import ru.orlovvv.weather.data.model.other.FoundLocation
+import ru.orlovvv.weather.data.model.other.Location
+import ru.orlovvv.weather.data.model.other.LocationCacheData
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
+import ru.orlovvv.weather.data.model.responses.HistoryResponse
 import ru.orlovvv.weather.data.model.responses.SearchResponse
 import ru.orlovvv.weather.data.repository.ForecastRepository
 import ru.orlovvv.weather.utils.NetworkHelper
@@ -27,13 +31,20 @@ class ForecastViewModel @Inject constructor(
     val searchQuery
         get() = _searchQuery
 
+    private var _selectedLocation =
+        MutableLiveData<FoundLocation>(FoundLocation("", -1, 0.0, 0.0, "", "", ""))
+
+    val selectedLocation
+        get() = _selectedLocation
+
     private val _forecast = MutableLiveData<Resource<ForecastResponse>>()
     val forecast: LiveData<Resource<ForecastResponse>>
         get() = _forecast
 
-    private val _today = MutableLiveData<Current>()
-    val today
-        get() = _today
+    private val _forecastCache =
+        forecastRepository.getForecastCache(_selectedLocation.value?.id!!)
+    val forecastCache
+        get() = _forecastCache
 
     private val _foundedLocations = MutableLiveData<Resource<SearchResponse>>()
     val foundedLocations: LiveData<Resource<SearchResponse>>
@@ -47,7 +58,7 @@ class ForecastViewModel @Inject constructor(
         try {
             _forecast.postValue(Resource.Loading())
             if (networkHelper.isNetworkConnected()) {
-                val response = forecastRepository.getForecast("Irkutsk")
+                val response = forecastRepository.getForecast("London")
                 _forecast.postValue(handleForecastResponse(response))
             } else {
                 _forecast.postValue(Resource.Error("Error"))
@@ -93,8 +104,25 @@ class ForecastViewModel @Inject constructor(
         _searchQuery.value = query
     }
 
-    fun setToday() {
-        _today.value = forecast.value?.data?.current
+
+    // TODO REFACTOR
+    fun insertCache() = viewModelScope.launch {
+
+        if (forecast.value?.data?.current!! != forecastCache.value?.current) {
+            val current = _forecast.value?.data?.current
+            val forecast = _forecast.value?.data?.forecast
+            val locationId = _selectedLocation.value?.id
+
+            val locationCacheData = LocationCacheData(
+                current!!,
+                forecast!!,
+                HistoryResponse(forecast, Location("", 2.0, "", 2, 2.0, "", "", "")),
+                locationId!!
+            )
+
+            forecastRepository.insertCache(locationCacheData)
+        }
+
     }
 
 }
