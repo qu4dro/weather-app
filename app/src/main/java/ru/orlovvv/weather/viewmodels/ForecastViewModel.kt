@@ -32,7 +32,7 @@ class ForecastViewModel @Inject constructor(
         get() = _searchQuery
 
     private var _selectedLocation =
-        MutableLiveData<FoundLocation>(FoundLocation("", -1, 0.0, 0.0, "", "", ""))
+        MutableLiveData<FoundLocation>(FoundLocation("", -2, 0.0, 0.0, "Irkutsk", "", ""))
 
     val selectedLocation
         get() = _selectedLocation
@@ -58,8 +58,8 @@ class ForecastViewModel @Inject constructor(
         try {
             _forecast.postValue(Resource.Loading())
             if (networkHelper.isNetworkConnected()) {
-                val response = forecastRepository.getForecast("London")
-                _forecast.postValue(handleForecastResponse(response))
+                val response = _selectedLocation.value?.let { forecastRepository.getForecast(it.name) }
+                _forecast.postValue(response?.let { handleForecastResponse(it) })
             } else {
                 _forecast.postValue(Resource.Error("Error"))
             }

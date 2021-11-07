@@ -12,5 +12,20 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <!--Typography-->
+        <item name="textAppearanceHeadline1">@style/TextAppearance.Weather.Headline1</item>
+        <item name="textAppearanceHeadline2">@style/TextAppearance.Weather.Headline2</item>
+        <item name="textAppearanceHeadline3">@style/TextAppearance.Weather.Headline3</item>
+        <item name="textAppearanceHeadline4">@style/TextAppearance.Weather.Headline4</item>
+        <item name="textAppearanceHeadline5">@style/TextAppearance.Weather.Headline5</item>
+        <item name="textAppearanceHeadline6">@style/TextAppearance.Weather.Headline6</item>
+        <item name="textAppearanceSubtitle1">@style/TextAppearance.Weather.Subtitle1</item>
+        <item name="textAppearanceSubtitle2">@style/TextAppearance.Weather.Subtitle2</item>
+        <item name="textAppearanceBody1">@style/TextAppearance.Weather.Body1</item>
+        <item name="textAppearanceBody2">@style/TextAppearance.Weather.Body2</item>
+        <item name="textAppearanceButton">@style/TextAppearance.Weather.Button</item>
+        <item name="textAppearanceCaption">@style/TextAppearance.Weather.Caption</item>
+        <item name="textAppearanceOverline">@style/TextAppearance.Weather.Overline</item>
     </style>
 </resources>

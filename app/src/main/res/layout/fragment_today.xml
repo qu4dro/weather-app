@@ -52,7 +52,7 @@
                 temperature="@{foreViewModel.forecastCache.current.temp_c}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="96sp"
+                android:textAppearance="@style/TextAppearance.Weather.Headline1"
                 app:layout_constraintStart_toStartOf="@id/guideline_left"
                 app:layout_constraintTop_toTopOf="@id/guideline_top"
                 tools:text="24" />
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/feels_like"
-                android:textSize="16sp"
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
                 app:layout_constraintEnd_toStartOf="@id/tv_feels_like_temp"
                 app:layout_constraintStart_toStartOf="@id/tv_current_temp"
                 app:layout_constraintTop_toBottomOf="@id/tv_current_temp" />
@@ -73,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
                 android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/tv_feels_like"
                 app:layout_constraintTop_toBottomOf="@id/tv_current_temp"
