@@ -203,14 +203,21 @@
                 app:constraint_referenced_ids="tv_sunrise_time,tv_sunset_time" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="16dp"
-                hoursList="@{day.hour}"
-                app:layout_constraintTop_toBottomOf="@id/sun_barrier"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:orientation="horizontal"
                 android:id="@+id/rv_daily_forecast"
+                hoursList="@{day.hour}"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toBottomOf="@id/sun_barrier" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/group_expanded"
+                android:visibility="gone"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="tv_max_temp,tv_max_temp_value,tv_min_temp,tv_min_temp_value,tv_sunset,tv_sunset_time,tv_sunrise,tv_sunrise_time,rv_daily_forecast" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

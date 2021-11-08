@@ -1,6 +1,7 @@
 package ru.orlovvv.weather.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,8 @@ class DailyForecastAdapter :
 
     class DailyForecastViewHolder(val binding: ItemDailyForecastBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
+        var isExpanded = false
 
         fun bind(day: Forecastday) {
             binding.day = day
@@ -39,7 +42,20 @@ class DailyForecastAdapter :
         position: Int
     ) {
         val day = getItem(position)
-        holder.binding.rvDailyForecast.adapter = HourlyForecastAdapter(isHorizontal = true)
+        holder.apply {
+            binding.rvDailyForecast.adapter = HourlyForecastAdapter(isHorizontal = true)
+            itemView.setOnClickListener {
+                if (isExpanded) {
+                    binding.groupExpanded.visibility = View.GONE
+                    isExpanded = !isExpanded
+                } else {
+                    binding.groupExpanded.visibility = View.VISIBLE
+                    isExpanded = !isExpanded
+                }
+            }
+        }
+
+
         holder.bind(day)
     }
 }
