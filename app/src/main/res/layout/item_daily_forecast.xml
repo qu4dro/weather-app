@@ -24,24 +24,15 @@
             android:padding="16dp">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/tv_day"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Monday"
-                android:textAppearance="@style/TextAppearance.Weather.Body1"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Monday" />
-
-            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{day.date}"
+                date="@{day.date}"
                 android:textAppearance="@style/TextAppearance.Weather.Body1"
-                app:layout_constraintStart_toEndOf="@id/tv_day"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="08.03.2034" />
+                tools:text="Monday, 08.09.2043" />
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_avg_temp"
@@ -74,7 +65,7 @@
                 android:scaleType="fitXY"
                 app:imageUrl="@{day.day.condition.icon}"
                 app:layout_constraintStart_toEndOf="@id/tv_condition"
-                app:layout_constraintTop_toBottomOf="@id/tv_day"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"
                 tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
             <androidx.constraintlayout.widget.Barrier

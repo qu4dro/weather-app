@@ -16,6 +16,7 @@ import ru.orlovvv.weather.R
 import ru.orlovvv.weather.data.model.other.Forecastday
 import ru.orlovvv.weather.data.model.other.Hour
 import ru.orlovvv.weather.utils.Constants.DATE_PATTERN
+import ru.orlovvv.weather.utils.Constants.DATE_PATTERN_WITHOUT_HOURS
 import ru.orlovvv.weather.utils.Res
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -55,9 +56,13 @@ fun bindHour(textView: MaterialTextView, date: String) {
 
 @BindingAdapter("today")
 fun bindToday(textView: MaterialTextView, parameter: Int?) {
-    val calendar = Calendar.getInstance()
-    val date = calendar.time
-    textView.text = SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
+    textView.text = getToday()
+}
+
+@BindingAdapter("date")
+fun bindDay(textView: MaterialTextView, date: String) {
+    var dayString = formatDateToDayString(date)
+    textView.text = dayString
 }
 
 @BindingAdapter("imageUrl")
@@ -85,13 +90,20 @@ fun bindImage(imgView: ImageView, urlToImage: String?) {
 
 private fun beautifyTemperature(temp: Double) = temp.roundToInt().toString() + "\u00B0"
 
-private fun formatDateToHour(date: String) : String {
+private fun formatDateToHour(date: String): String {
     val outputFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     val inputFormat: DateFormat = SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH)
     return outputFormat.format(inputFormat.parse(date))
 }
 
-private fun formatDateToDayString(date: String) : String {
-    val inputFormat: DateFormat = SimpleDateFormat("EEEE", Locale.ENGLISH)
-    return inputFormat.format(date)
+private fun formatDateToDayString(date: String): String {
+    val outputFormat: DateFormat = SimpleDateFormat("EEEE, d MMM", Locale.ENGLISH)
+    val inputFormat: DateFormat = SimpleDateFormat(DATE_PATTERN_WITHOUT_HOURS, Locale.ENGLISH)
+    return outputFormat.format(inputFormat.parse(date))
+}
+
+private fun getToday(): String {
+    val calendar = Calendar.getInstance()
+    val date = calendar.time
+    return SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
 }

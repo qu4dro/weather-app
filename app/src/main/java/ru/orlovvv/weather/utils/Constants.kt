@@ -13,4 +13,6 @@ object Constants {
 
     const val DATE_PATTERN = "yyyy-MM-dd HH:mm"
 
+    const val DATE_PATTERN_WITHOUT_HOURS = "yyyy-MM-dd"
+
 }
