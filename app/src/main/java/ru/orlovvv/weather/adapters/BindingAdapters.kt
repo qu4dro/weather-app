@@ -13,6 +13,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.textview.MaterialTextView
 import ru.orlovvv.weather.R
+import ru.orlovvv.weather.data.model.other.Forecastday
 import ru.orlovvv.weather.data.model.other.Hour
 import ru.orlovvv.weather.utils.Constants.DATE_PATTERN
 import ru.orlovvv.weather.utils.Res
@@ -26,6 +27,12 @@ import kotlin.math.roundToInt
 @BindingAdapter("hoursList")
 fun bindHourlyForecastList(recyclerView: RecyclerView, data: List<Hour>?) {
     val adapter = recyclerView.adapter as HourlyForecastAdapter
+    adapter.submitList(data)
+}
+
+@BindingAdapter("daysList")
+fun bindDailyForecastList(recyclerView: RecyclerView, data: List<Forecastday>?) {
+    val adapter = recyclerView.adapter as DailyForecastAdapter
     adapter.submitList(data)
 }
 
