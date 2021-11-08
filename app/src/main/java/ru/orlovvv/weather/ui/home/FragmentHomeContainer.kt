@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,6 +87,11 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
                         selectTab(getTabAt(position))
                     }
                 }
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    enableDisableSwipeRefresh(state == ViewPager.SCROLL_STATE_IDLE)
+                }
             })
         }
     }
@@ -105,6 +111,10 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
                 override fun onTabReselected(tab: TabLayout.Tab?) {}
             })
         }
+    }
+
+    private fun enableDisableSwipeRefresh(enable: Boolean) {
+        binding.swipeRefresh.isEnabled = enable
     }
 
     override fun onDestroyView() {
