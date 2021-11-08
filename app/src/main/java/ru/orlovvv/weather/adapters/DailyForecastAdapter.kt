@@ -11,7 +11,7 @@ import ru.orlovvv.weather.databinding.ItemDailyForecastBinding
 class DailyForecastAdapter :
     ListAdapter<Forecastday, DailyForecastAdapter.DailyForecastViewHolder>(DayCallback) {
 
-    class DailyForecastViewHolder(private val binding: ItemDailyForecastBinding) :
+    class DailyForecastViewHolder(val binding: ItemDailyForecastBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(day: Forecastday) {
@@ -39,6 +39,7 @@ class DailyForecastAdapter :
         position: Int
     ) {
         val day = getItem(position)
+        holder.binding.rvDailyForecast.adapter = HourlyForecastAdapter(isHorizontal = true)
         holder.bind(day)
     }
 }
