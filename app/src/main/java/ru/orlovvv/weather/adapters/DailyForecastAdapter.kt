@@ -15,8 +15,6 @@ class DailyForecastAdapter :
     class DailyForecastViewHolder(val binding: ItemDailyForecastBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        var isExpanded = false
-
         fun bind(day: Forecastday) {
             binding.day = day
             binding.executePendingBindings()
@@ -45,16 +43,15 @@ class DailyForecastAdapter :
         holder.apply {
             binding.rvDailyForecast.adapter = HourlyForecastAdapter(isHorizontal = true)
             itemView.setOnClickListener {
-                if (isExpanded) {
-                    binding.groupExpanded.visibility = View.GONE
-                    isExpanded = !isExpanded
-                } else {
-                    binding.groupExpanded.visibility = View.VISIBLE
-                    isExpanded = !isExpanded
+                binding.groupExpanded.apply {
+                    if (this.visibility == View.GONE) {
+                        binding.groupExpanded.visibility = View.VISIBLE
+                    } else {
+                        binding.groupExpanded.visibility = View.GONE
+                    }
                 }
             }
         }
-
 
         holder.bind(day)
     }
