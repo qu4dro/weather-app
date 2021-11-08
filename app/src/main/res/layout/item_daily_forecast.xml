@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="day"
             type="ru.orlovvv.weather.data.model.other.Forecastday" />
@@ -11,31 +12,204 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/CardViewStyle.BaseCardStyle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="12dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="16dp">
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_day"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="Monday"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="Monday"
                 android:textAppearance="@style/TextAppearance.Weather.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Monday" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_date"
-                app:layout_constraintTop_toBottomOf="@id/tv_day"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:text="08.03.2034"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@{day.date}"
                 android:textAppearance="@style/TextAppearance.Weather.Body1"
+                app:layout_constraintStart_toEndOf="@id/tv_day"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="08.03.2034" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_avg_temp"
+                temperature="@{day.day.avgtemp_c}"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="@style/TextAppearance.Weather.Headline5"
+                app:layout_constraintBottom_toBottomOf="@id/iv_condition"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="23" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{day.day.condition.text}"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/iv_condition"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/iv_condition"
+                tools:text="Sunny" />
+
+            <ImageView
+                android:id="@+id/iv_condition"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitXY"
+                app:imageUrl="@{day.day.condition.icon}"
+                app:layout_constraintStart_toEndOf="@id/tv_condition"
+                app:layout_constraintTop_toBottomOf="@id/tv_day"
+                tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/basic_info_barrier"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tv_date,tv_condition,tv_avg_temp,iv_condition" />
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_max_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/max_temp"
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
+                app:layout_constraintEnd_toStartOf="@id/tv_min_temp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/basic_info_barrier" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_max_temp_value"
+                temperature="@{day.day.maxtemp_c}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@string/max_temp"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
+                app:layout_constraintEnd_toStartOf="@id/tv_min_temp_value"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_max_temp"
+                tools:text="23" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_min_temp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:gravity="end"
+                android:text="@string/min_temp"
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_max_temp"
+                app:layout_constraintTop_toBottomOf="@id/basic_info_barrier" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_min_temp_value"
+                temperature="@{day.day.mintemp_c}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="end"
+                android:text="@string/max_temp"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_max_temp_value"
+                app:layout_constraintTop_toBottomOf="@id/tv_min_temp"
+                tools:text="23" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/temp_barrier"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tv_max_temp_value,tv_min_temp_value" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_sunrise_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@{day.astro.sunrise}"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
+                app:layout_constraintEnd_toStartOf="@id/tv_sunset_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_sunrise"
+                tools:text="07:30 AM" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_sunrise"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="@string/sunrise"
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
+                app:layout_constraintEnd_toStartOf="@id/tv_sunset"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/temp_barrier" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_sunset"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:gravity="end"
+                android:text="@string/sunset"
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_sunrise"
+                app:layout_constraintTop_toBottomOf="@id/temp_barrier" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_sunset_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:gravity="end"
+                android:text="@{day.astro.sunset}"
+                android:textAppearance="@style/TextAppearance.Weather.Body2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/tv_sunrise_time"
+                app:layout_constraintTop_toBottomOf="@id/tv_sunset"
+                tools:text="4:30 PM" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/sun_barrier"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="tv_sunrise_time,tv_sunset_time" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_marginTop="16dp"
+                hoursList="@{day.hour}"
+                app:layout_constraintTop_toBottomOf="@id/sun_barrier"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:orientation="horizontal"
+                android:id="@+id/rv_daily_forecast"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
