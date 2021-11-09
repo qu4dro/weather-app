@@ -71,6 +71,12 @@ fun bindPercent(textView: MaterialTextView, value: Int) {
     textView.text = percentString
 }
 
+@BindingAdapter("percentDouble")
+fun bindPercentDouble(textView: MaterialTextView, value: Double) {
+    val percentString = value.roundToInt().toString() + "%"
+    textView.text = percentString
+}
+
 @BindingAdapter("speed")
 fun bindSpeed(textView: MaterialTextView, speed: Double) {
     val speedString = speed.roundToInt().toString() + " " + Res.getString(R.string.kmh)
