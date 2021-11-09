@@ -27,14 +27,15 @@
     </style>
 
     <style name="TextAppearance.Weather.Body1" parent="TextAppearance.MaterialComponents.Body1">
-        <item name="fontFamily">@font/montserrat_semi_bold</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
         <item name="android:textSize">16sp</item>
         <item name="lineHeight">24sp</item>
     </style>
 
     <style name="TextAppearance.Weather.Body2" parent="TextAppearance.MaterialComponents.Body2">
-        <item name="fontFamily">@font/montserrat_medium</item>
+        <item name="fontFamily">@font/montserrat_semi_bold</item>
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
     <style name="TextAppearance.Weather.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">

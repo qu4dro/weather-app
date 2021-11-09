@@ -5,6 +5,24 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
+
+    <color name="black">#171E26</color>
+    <color name="black_surface">#1F2630</color>
+    <color name="sub_black">#29313C</color>
+    <color name="dark_grey">#253037</color>
+    <color name="middle_grey">#303841</color>
+    <color name="grey">#efeef1</color>
+    <color name="grey_light">#777777</color>
+    <color name="grey_light_night">#C5C5C5</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="light_grey">#f9f9f9</color>
+    <color name="light_blue">#F1F4FB</color>
+    <color name="blue">#D6DEFA</color>
+
+    <color name="orange_300">#fbd790</color>
+    <color name="orange_400">#f9be64</color>
+    <color name="orange_500">#f9aa33</color>
+
+    <color name="red_200">#cf7779</color>
+    <color name="red_400">#ff4c5d</color>
 </resources>

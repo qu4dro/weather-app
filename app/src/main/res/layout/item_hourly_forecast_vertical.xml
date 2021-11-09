@@ -16,27 +16,39 @@
         android:layout_height="wrap_content"
         android:paddingTop="4dp">
 
-        <com.google.android.material.textview.MaterialTextView
-            hour="@{hour.time}"
-            android:textAppearance="@style/TextAppearance.Weather.Body1"
-            android:id="@+id/tv_hour"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/iv_condition"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.5"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            hour="@{hour.time}"
+            android:textSize="14sp"
+            android:textAppearance="@style/TextAppearance.Weather.Body1"
+            android:id="@+id/tv_hour"
+            android:layout_width="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="@id/iv_condition"
+            app:layout_constraintBottom_toBottomOf="@id/iv_condition"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/tv_temperature"
             tools:text="00:00" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:textAppearance="@style/TextAppearance.Weather.Body1"
+            android:textAppearance="@style/TextAppearance.Weather.Body2"
             android:id="@+id/tv_temperature"
             temperature="@{hour.temp_c}"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:gravity="end"
+            android:layout_marginStart="12dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintStart_toEndOf="@id/tv_hour"
+            app:layout_constraintEnd_toStartOf="@id/guideline_center"
             app:layout_constraintBottom_toBottomOf="@id/iv_condition"
-            app:layout_constraintEnd_toStartOf="@id/iv_condition"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/iv_condition"
             tools:text="12" />
 
@@ -44,11 +56,11 @@
             android:id="@+id/iv_condition"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="18dp"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
             app:imageUrl="@{hour.condition.icon}"
-            app:layout_constraintStart_toEndOf="@id/tv_temperature"
+            app:layout_constraintStart_toEndOf="@id/guideline_center"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
@@ -57,13 +69,14 @@
             android:id="@+id/tv_condition"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginStart="12dp"
+            android:maxLines="1"
+            android:ellipsize="end"
             android:text="@{hour.condition.text}"
             app:layout_constraintBottom_toBottomOf="@id/iv_condition"
             app:layout_constraintStart_toEndOf="@id/iv_condition"
             app:layout_constraintTop_toTopOf="@id/iv_condition"
-            app:layout_constraintEnd_toStartOf="@id/tv_hour"
+            app:layout_constraintEnd_toEndOf="parent"
             tools:text="Rainy possible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

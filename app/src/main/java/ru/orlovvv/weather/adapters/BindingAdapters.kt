@@ -61,8 +61,29 @@ fun bindToday(textView: MaterialTextView, parameter: Int?) {
 
 @BindingAdapter("date")
 fun bindDay(textView: MaterialTextView, date: String) {
-    var dayString = formatDateToDayString(date)
+    val dayString = formatDateToDayString(date)
     textView.text = dayString
+}
+
+@BindingAdapter("percent")
+fun bindPercent(textView: MaterialTextView, value: Int) {
+    val percentString = "$value%"
+    textView.text = percentString
+}
+
+@BindingAdapter("speed")
+fun bindSpeed(textView: MaterialTextView, speed: Double) {
+    val speedString = speed.roundToInt().toString() + " " + Res.getString(R.string.kmh)
+    textView.text = speedString
+}
+
+@BindingAdapter("max", "min")
+fun bindMaxAndMinTemp(textView: MaterialTextView, max: Double, min: Double) {
+    val tempString =
+        Res.getString(R.string.max) + ": " + beautifyTemperature(max) + ", " + Res.getString(R.string.min) + ": " + beautifyTemperature(
+            min
+        )
+    textView.text = tempString
 }
 
 @BindingAdapter("imageUrl")

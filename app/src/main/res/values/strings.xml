@@ -16,5 +16,11 @@
     <string name="max_temp">Max temp</string>
     <string name="min_temp">Min temp</string>
     <string name="sunset">Sunset</string>
+    <string name="max">Max</string>
+    <string name="min">Min</string>
+    <string name="humidity">Humidity</string>
+    <string name="wind">Wind</string>
+    <string name="kmh">km/h</string>
+    <string name="hourly_forecast">Hourly forecast</string>
 
 </resources>
