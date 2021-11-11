@@ -31,6 +31,7 @@ interface Api {
     suspend fun getForecastHistory(
         @Query("q") locationName: String = "",
         @Query("dt") date: String = DateUtils().getLastWeek(),
+        @Query("end_dt") dateEnd: String = DateUtils().getYesterday(),
         @Query("key") apiKey: String = API_KEY_PUBLIC
     ): Response<HistoryResponse>
 

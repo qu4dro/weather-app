@@ -5,10 +5,15 @@ import java.util.*
 
 class DateUtils {
 
-    fun getLastWeek(): String {
-        val calendar = Calendar.getInstance()
-        val date = calendar.time
-        return SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date.time - 7 * 24 * 60 * 60 * 1000)
-    }
+    private val calendar = Calendar.getInstance()
+    private val date = calendar.time
+
+    fun getLastWeek(): String =
+        SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date.time - 7 * 24 * 60 * 60 * 1000)
+
+    fun getToday(): String = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date.time)
+
+    fun getYesterday(): String =
+        SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).format(date.time - 1 * 24 * 60 * 60 * 1000)
 
 }
