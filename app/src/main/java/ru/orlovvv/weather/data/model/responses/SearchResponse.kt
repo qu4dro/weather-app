@@ -1,5 +1,5 @@
 package ru.orlovvv.weather.data.model.responses
 
-import ru.orlovvv.weather.data.model.other.FoundLocation
+import ru.orlovvv.weather.data.model.cache.LocationCache
 
-class SearchResponse : ArrayList<FoundLocation>()
+class SearchResponse : ArrayList<LocationCache>()

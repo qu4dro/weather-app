@@ -1,10 +1,10 @@
-package ru.orlovvv.weather.data.model.other
+package ru.orlovvv.weather.data.model.cache
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "locations")
-data class FoundLocation(
+data class LocationCache(
     var country: String,
     @PrimaryKey(autoGenerate = false)
     var id: Int,

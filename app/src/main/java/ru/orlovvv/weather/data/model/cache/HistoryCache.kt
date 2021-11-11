@@ -1,14 +1,12 @@
-package ru.orlovvv.weather.data.model.other
+package ru.orlovvv.weather.data.model.cache
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import ru.orlovvv.weather.data.model.responses.HistoryResponse
+import ru.orlovvv.weather.data.model.other.Forecast
 
-@Entity(tableName = "forecast")
-data class LocationCacheData(
-    var current: Current,
+@Entity(tableName = "history")
+class HistoryCache(
     var forecast: Forecast,
-    var history: HistoryResponse,
     val locationId: Int
 ) {
     @PrimaryKey(autoGenerate = false)

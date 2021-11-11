@@ -64,7 +64,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
                 is Resource.Success -> {
                     binding.swipeRefresh.isRefreshing = false
                     response.data?.let {
-//                        forecastViewModel.insertCache()
+                        forecastViewModel.insertForecastCache()
                     }
                 }
             }
@@ -81,7 +81,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
                 is Resource.Success -> {
                     binding.swipeRefresh.isRefreshing = false
                     response.data?.let {
-//                        forecastViewModel.insertCache()
+                        forecastViewModel.insertHistoryCache()
                     }
                 }
             }

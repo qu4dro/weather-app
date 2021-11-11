@@ -8,8 +8,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Response
-import ru.orlovvv.weather.data.model.other.FoundLocation
-import ru.orlovvv.weather.data.model.other.LocationCacheData
+import ru.orlovvv.weather.data.model.cache.LocationCache
+import ru.orlovvv.weather.data.model.cache.ForecastCache
+import ru.orlovvv.weather.data.model.cache.HistoryCache
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
 import ru.orlovvv.weather.data.model.responses.HistoryResponse
 import ru.orlovvv.weather.data.model.responses.SearchResponse
@@ -26,7 +27,7 @@ class ForecastViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var _selectedLocation =
-        MutableLiveData<FoundLocation>(FoundLocation("", -2, 0.0, 0.0, "Irkutsk", "", ""))
+        MutableLiveData<LocationCache>(LocationCache("", -2, 0.0, 0.0, "Irkutsk", "", ""))
     val selectedLocation
         get() = _selectedLocation
 
@@ -55,24 +56,32 @@ class ForecastViewModel @Inject constructor(
     val forecastCache
         get() = _forecastCache
 
+    // Cached history data
+    private val _historyCache =
+        forecastRepository.getHistoryCache(_selectedLocation.value?.id!!)
+    val historyCache
+        get() = _historyCache
+
     init {
         _selectedLocation.value?.let { getForecast(it.name) }
-        _selectedLocation.value?.let { getHistory(it.name) }
+        _selectedLocation.value?.let { getForecastHistory(it.name) }
     }
 
-    fun getForecast(locationName: String? = _selectedLocation.value?.name) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            _forecast.postValue(Resource.Loading())
-            if (networkHelper.isNetworkConnected()) {
-                val response = locationName?.let { forecastRepository.getForecast(it) }
-                _forecast.postValue(response?.let { handleForecastResponse(it) })
-            } else {
-                _forecast.postValue(Resource.Error("Error"))
+    /* Network requests */
+    fun getForecast(locationName: String? = _selectedLocation.value?.name) =
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (networkHelper.isNetworkConnected()) {
+                    _forecast.postValue(Resource.Loading())
+                    val response = locationName?.let { forecastRepository.getForecast(it) }
+                    _forecast.postValue(response?.let { handleForecastResponse(it) })
+                } else {
+                    _forecast.postValue(Resource.Error("Error"))
+                }
+            } catch (e: Exception) {
+                _forecast.postValue(Resource.Error("Can not get forecast: ${e.message}"))
             }
-        } catch (e: Exception) {
-            _forecast.postValue(Resource.Error("Can not get forecast: ${e.message}"))
         }
-    }
 
     private fun handleForecastResponse(response: Response<ForecastResponse>): Resource<ForecastResponse> {
         if (response.isSuccessful) {
@@ -85,15 +94,15 @@ class ForecastViewModel @Inject constructor(
 
     fun searchLocation(searchQuery: String) = viewModelScope.launch(Dispatchers.IO) {
         try {
-            _foundedLocations.postValue(Resource.Loading())
             if (networkHelper.isNetworkConnected()) {
+                _foundedLocations.postValue(Resource.Loading())
                 val response = forecastRepository.searchLocation(searchQuery)
                 _foundedLocations.postValue(handleSearchLocationResponse(response))
             } else {
                 _foundedLocations.postValue(Resource.Error("Error"))
             }
         } catch (e: Exception) {
-            _foundedLocations.postValue(Resource.Error("Can not get forecast: ${e.message}"))
+            _foundedLocations.postValue(Resource.Error("Can not get location: ${e.message}"))
         }
     }
 
@@ -106,19 +115,20 @@ class ForecastViewModel @Inject constructor(
         return Resource.Error(response.errorBody().toString())
     }
 
-    fun getHistory(locationName: String? = _selectedLocation.value?.name) = viewModelScope.launch(Dispatchers.IO) {
-        try {
-            _forecastHistory.postValue(Resource.Loading())
-            if (networkHelper.isNetworkConnected()) {
-                val response = locationName?.let { forecastRepository.getForecastHistory(it) }
-                _forecastHistory.postValue(response?.let { handleForecastHistoryResponse(it) })
-            } else {
-                _foundedLocations.postValue(Resource.Error("Error"))
+    fun getForecastHistory(locationName: String? = _selectedLocation.value?.name) =
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                if (networkHelper.isNetworkConnected()) {
+                    _forecastHistory.postValue(Resource.Loading())
+                    val response = locationName?.let { forecastRepository.getForecastHistory(it) }
+                    _forecastHistory.postValue(response?.let { handleForecastHistoryResponse(it) })
+                } else {
+                    _foundedLocations.postValue(Resource.Error("Error"))
+                }
+            } catch (e: Exception) {
+                _foundedLocations.postValue(Resource.Error("Can not get forecast history: ${e.message}"))
             }
-        } catch (e: Exception) {
-            _foundedLocations.postValue(Resource.Error("Can not get forecast history: ${e.message}"))
         }
-    }
 
     private fun handleForecastHistoryResponse(response: Response<HistoryResponse>): Resource<HistoryResponse> {
         if (response.isSuccessful) {
@@ -128,32 +138,39 @@ class ForecastViewModel @Inject constructor(
         }
         return Resource.Error(response.errorBody().toString())
     }
+    /* --------------- */
 
+    fun insertHistoryCache() = viewModelScope.launch {
+        val networkHistory = _forecastHistory.value?.data
+        val cacheHistory = _historyCache.value
+
+        if (networkHistory?.forecast != cacheHistory?.forecast) {
+            val forecast = networkHistory?.forecast
+            val locationId = _selectedLocation.value?.id
+            val newCache = HistoryCache(forecast!!, locationId!!)
+            forecastRepository.insertHistoryCache(newCache)
+        }
+    }
+
+    fun insertForecastCache() = viewModelScope.launch {
+        val networkForecast = _forecast.value?.data
+        val cacheForecast = _forecastCache.value
+
+        if (networkForecast?.current != cacheForecast?.current) {
+            val current = _forecast.value?.data?.current
+            val forecast = _forecast.value?.data?.forecast
+            val locationId = _selectedLocation.value?.id
+            val newCache = ForecastCache(
+                current!!,
+                forecast!!,
+                locationId!!
+            )
+            forecastRepository.insertForecastCache(newCache)
+        }
+    }
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
     }
-
-
-    // TODO REFACTOR
-//    fun insertCache() = viewModelScope.launch {
-//
-//        if (forecast.value?.data?.current!! != forecastCache.value?.current) {
-//            val current = _forecast.value?.data?.current
-//            val forecast = _forecast.value?.data?.forecast
-//            val locationId = _selectedLocation.value?.id
-//            val history = _forecastHistory.value?.data
-//
-//            val locationCacheData = LocationCacheData(
-//                current!!,
-//                forecast!!,
-//                history!!,
-//                locationId!!
-//            )
-//
-//            forecastRepository.insertCache(locationCacheData)
-//        }
-//
-//    }
 
 }
