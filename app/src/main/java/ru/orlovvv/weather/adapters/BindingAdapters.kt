@@ -17,6 +17,7 @@ import ru.orlovvv.weather.data.model.other.Forecastday
 import ru.orlovvv.weather.data.model.other.Hour
 import ru.orlovvv.weather.utils.Constants.DATE_PATTERN
 import ru.orlovvv.weather.utils.Constants.DATE_PATTERN_WITHOUT_HOURS
+import ru.orlovvv.weather.utils.DateUtils
 import ru.orlovvv.weather.utils.Res
 import java.text.DateFormat
 import java.text.SimpleDateFormat
@@ -50,18 +51,18 @@ fun bindTemperatureLike(textView: MaterialTextView, temp: Double) {
 
 @BindingAdapter("hour")
 fun bindHour(textView: MaterialTextView, date: String) {
-    val hourString = formatDateToHour(date)
+    val hourString = DateUtils.formatDateToHour(date)
     textView.text = hourString
 }
 
 @BindingAdapter("today")
 fun bindToday(textView: MaterialTextView, parameter: Int?) {
-    textView.text = getToday()
+    textView.text = DateUtils.getToday("EEEE")
 }
 
 @BindingAdapter("date")
 fun bindDay(textView: MaterialTextView, date: String) {
-    val dayString = formatDateToDayString(date)
+    val dayString = DateUtils.formatDateToDayString(date)
     textView.text = dayString
 }
 
@@ -116,21 +117,3 @@ fun bindImage(imgView: ImageView, urlToImage: String?) {
 }
 
 private fun beautifyTemperature(temp: Double) = temp.roundToInt().toString() + "\u00B0"
-
-private fun formatDateToHour(date: String): String {
-    val outputFormat: DateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-    val inputFormat: DateFormat = SimpleDateFormat(DATE_PATTERN, Locale.ENGLISH)
-    return outputFormat.format(inputFormat.parse(date))
-}
-
-private fun formatDateToDayString(date: String): String {
-    val outputFormat: DateFormat = SimpleDateFormat("EEEE, d MMM", Locale.ENGLISH)
-    val inputFormat: DateFormat = SimpleDateFormat(DATE_PATTERN_WITHOUT_HOURS, Locale.ENGLISH)
-    return outputFormat.format(inputFormat.parse(date))
-}
-
-private fun getToday(): String {
-    val calendar = Calendar.getInstance()
-    val date = calendar.time
-    return SimpleDateFormat("EEEE", Locale.ENGLISH).format(date.time)
-}
