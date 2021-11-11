@@ -4,9 +4,11 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
+import ru.orlovvv.weather.data.model.responses.HistoryResponse
 import ru.orlovvv.weather.data.model.responses.SearchResponse
 import ru.orlovvv.weather.utils.Constants.API_KEY_PUBLIC
 import ru.orlovvv.weather.utils.Constants.FORECAST_DAYS
+import ru.orlovvv.weather.utils.DateUtils
 
 interface Api {
 
@@ -24,5 +26,12 @@ interface Api {
         @Query("q") searchQuery: String = "",
         @Query("key") apiKey: String = API_KEY_PUBLIC
     ): Response<SearchResponse>
+
+    @GET("history.json")
+    suspend fun getForecastHistory(
+        @Query("q") locationName: String = "",
+        @Query("dt") date: String = DateUtils().getLastWeek(),
+        @Query("key") apiKey: String = API_KEY_PUBLIC
+    ): Response<HistoryResponse>
 
 }

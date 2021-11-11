@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/QU4DRO/AndroidStudioProjects/Weather/app/src/main/res/drawable/ic_saved.xml" value="0.35" />
         <entry key="..\:/Users/QU4DRO/AndroidStudioProjects/Weather/app/src/main/res/layout/activity_weather.xml" value="0.25" />
         <entry key="..\:/Users/QU4DRO/AndroidStudioProjects/Weather/app/src/main/res/layout/fragment_forecast.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/QU4DRO/AndroidStudioProjects/Weather/app/src/main/res/layout/fragment_history.xml" value="0.20416666666666666" />

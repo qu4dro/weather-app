@@ -10,10 +10,14 @@ class ForecastRepository @Inject constructor(
     private val weatherDao: WeatherDao
 ) {
 
+    // Network
     suspend fun getForecast(locationName: String) = apiHelper.getForecast(locationName)
 
     suspend fun searchLocation(searchQuery: String) = apiHelper.searchLocation(searchQuery)
 
+    suspend fun getForecastHistory(locationName: String) = apiHelper.getForecastHistory(locationName)
+
+    // DB cache
     suspend fun insertCache(locationCacheData: LocationCacheData) =
         weatherDao.clearAndInsertCache(locationCacheData)
 

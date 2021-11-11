@@ -1,6 +1,5 @@
 package ru.orlovvv.weather.ui.home
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -53,23 +52,36 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     }
 
     private fun setupObservers() {
+
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Loading -> {
                     binding.swipeRefresh.isRefreshing = true
-                    Timber.d("Loading")
                 }
                 is Resource.Error -> {
                     binding.swipeRefresh.isRefreshing = false
-                    response.message?.let { message ->
-                        Timber.d("An error has occurred: $message")
-                    }
                 }
                 is Resource.Success -> {
                     binding.swipeRefresh.isRefreshing = false
                     response.data?.let {
-                        Timber.d(it.toString())
-                        forecastViewModel.insertCache()
+//                        forecastViewModel.insertCache()
+                    }
+                }
+            }
+        })
+
+        forecastViewModel.forecastHistory.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
+                is Resource.Loading -> {
+                    binding.swipeRefresh.isRefreshing = true
+                }
+                is Resource.Error -> {
+                    binding.swipeRefresh.isRefreshing = false
+                }
+                is Resource.Success -> {
+                    binding.swipeRefresh.isRefreshing = false
+                    response.data?.let {
+//                        forecastViewModel.insertCache()
                     }
                 }
             }

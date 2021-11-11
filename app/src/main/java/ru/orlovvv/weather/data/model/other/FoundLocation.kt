@@ -15,4 +15,5 @@ data class FoundLocation(
     var url: String
 ) {
     var dateCreated: Long = System.currentTimeMillis()
+    var isMain: Boolean = false
 }
