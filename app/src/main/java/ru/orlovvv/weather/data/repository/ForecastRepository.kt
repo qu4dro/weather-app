@@ -20,10 +20,10 @@ class ForecastRepository @Inject constructor(
 
     // DB cache
     suspend fun insertForecastCache(forecastCache: ForecastCache) =
-        weatherDao.insertForecastCache(forecastCache)
+        weatherDao.clearAndInsertForecastCache(forecastCache)
 
     suspend fun insertHistoryCache(historyCache: HistoryCache) =
-        weatherDao.insertHistoryCache(historyCache)
+        weatherDao.clearAndInsertHistoryCache(historyCache)
 
     fun getForecastCache(id: Int) = weatherDao.getForecastCache(id)
     fun getHistoryCache(id: Int) = weatherDao.getHistoryCache(id)

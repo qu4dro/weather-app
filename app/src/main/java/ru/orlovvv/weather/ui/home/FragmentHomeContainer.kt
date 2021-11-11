@@ -45,7 +45,10 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     private fun setupUI() {
         binding.swipeRefresh.setOnRefreshListener {
-            forecastViewModel.getForecast()
+            forecastViewModel.apply {
+                getForecast()
+                getForecastHistory()
+            }
         }
         setPager()
         setTabs()
@@ -73,13 +76,13 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
         forecastViewModel.forecastHistory.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Loading -> {
-                    binding.swipeRefresh.isRefreshing = true
+                    //binding.swipeRefresh.isRefreshing = true
                 }
                 is Resource.Error -> {
-                    binding.swipeRefresh.isRefreshing = false
+                    //binding.swipeRefresh.isRefreshing = false
                 }
                 is Resource.Success -> {
-                    binding.swipeRefresh.isRefreshing = false
+                    //binding.swipeRefresh.isRefreshing = false
                     response.data?.let {
                         forecastViewModel.insertHistoryCache()
                     }

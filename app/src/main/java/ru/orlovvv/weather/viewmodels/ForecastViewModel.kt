@@ -123,10 +123,10 @@ class ForecastViewModel @Inject constructor(
                     val response = locationName?.let { forecastRepository.getForecastHistory(it) }
                     _forecastHistory.postValue(response?.let { handleForecastHistoryResponse(it) })
                 } else {
-                    _foundedLocations.postValue(Resource.Error("Error"))
+                    _forecastHistory.postValue(Resource.Error("Error"))
                 }
             } catch (e: Exception) {
-                _foundedLocations.postValue(Resource.Error("Can not get forecast history: ${e.message}"))
+                _forecastHistory.postValue(Resource.Error("Can not get forecast history: ${e.message}"))
             }
         }
 

@@ -27,7 +27,7 @@ interface WeatherDao {
     @Query("SELECT * FROM forecast WHERE locationId = :id ORDER BY dateCreated DESC LIMIT 1")
     fun getForecastCache(id: Int): LiveData<ForecastCache>
 
-    @Query("SELECT * FROM history WHERE locationId = :id ORDER BY dateCreated DESC")
+    @Query("SELECT * FROM history WHERE locationId = :id ORDER BY dateCreated DESC LIMIT 1")
     fun getHistoryCache(id: Int): LiveData<HistoryCache>
 
     @Transaction

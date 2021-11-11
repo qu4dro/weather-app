@@ -25,7 +25,7 @@ data class Hour(
     var temp_f: Double,
     var time: String,
     var time_epoch: Int,
-    var uv: Double,
+    var uv: Double = 0.0,
     var vis_km: Double,
     var vis_miles: Double,
     var will_it_rain: Int,
