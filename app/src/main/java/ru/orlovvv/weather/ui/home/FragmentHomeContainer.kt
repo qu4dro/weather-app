@@ -28,6 +28,8 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     private val forecastViewModel: ForecastViewModel by activityViewModels()
 
+    private var dropDownIsVisible = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,10 +46,15 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     }
 
     private fun setupUI() {
-        binding.swipeRefresh.setOnRefreshListener {
-            forecastViewModel.apply {
-                getForecast()
-                getForecastHistory()
+        binding.apply {
+            foreViewModel = forecastViewModel
+            btnLocations.setOnClickListener { showDialog() }
+            tvLocation.setOnClickListener { showDialog() }
+            swipeRefresh.setOnRefreshListener {
+                forecastViewModel.apply {
+                    getForecast()
+                    getForecastHistory()
+                }
             }
         }
         setPager()
@@ -55,6 +62,10 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     }
 
     private fun setupObservers() {
+
+        forecastViewModel.selectedLocation.observe(viewLifecycleOwner, Observer {
+
+        })
 
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
@@ -130,6 +141,11 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     private fun enableDisableSwipeRefresh(enable: Boolean) {
         binding.swipeRefresh.isEnabled = enable
+    }
+
+    private fun showDialog() {
+        val bottomSheet = BottomSheetLocations()
+        bottomSheet.show(childFragmentManager, BottomSheetLocations.TAG)
     }
 
     override fun onDestroyView() {
