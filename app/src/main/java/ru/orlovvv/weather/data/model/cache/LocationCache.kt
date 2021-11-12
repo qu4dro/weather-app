@@ -1,5 +1,6 @@
 package ru.orlovvv.weather.data.model.cache
 
+import androidx.recyclerview.widget.DiffUtil
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -16,4 +17,19 @@ data class LocationCache(
 ) {
     var dateCreated: Long = System.currentTimeMillis()
     var isMain: Boolean = false
+}
+
+object LocationCallback : DiffUtil.ItemCallback<LocationCache>() {
+    override fun areItemsTheSame(
+        oldItem: LocationCache,
+        newItem: LocationCache
+    ) =
+        oldItem.id == newItem.id
+
+    override fun areContentsTheSame(
+        oldItem: LocationCache,
+        newItem: LocationCache
+    ) =
+        oldItem == newItem
+
 }
