@@ -25,13 +25,13 @@
         <item name="tabTextColor">?attr/colorOnPrimary</item>
         <item name="tabTextAppearance">@style/TextAppearance.Weather.Body1</item>
         <item name="tabIndicatorGravity">bottom</item>
-        <item name="tabGravity">fill</item>
-        <item name="tabMode">scrollable</item>
-        <item name="tabMaxWidth">0dp</item>
-        <item name="tabPaddingStart">8dp</item>
-        <item name="tabPaddingEnd">8dp</item>
+<!--        <item name="tabGravity">fill</item>-->
+<!--        <item name="tabMode">fixed</item>-->
+<!--        <item name="tabMaxWidth">0dp</item>-->
+<!--        <item name="tabPaddingStart">8dp</item>-->
+<!--        <item name="tabPaddingEnd">8dp</item>-->
         <!--        <item name="tabIndicatorHeight">32dp</item>-->
-        <item name="tabIndicatorFullWidth">true</item>
+<!--        <item name="tabIndicatorFullWidth">true</item>-->
         <!--        <item name="tabIndicator">@drawable/shape_tab_indicator</item>-->
         <!--        <item name="tabIndicatorColor">@color/violet</item>-->
     </style>

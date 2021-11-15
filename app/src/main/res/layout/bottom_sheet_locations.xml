@@ -3,6 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <variable
+            name="foreViewModel"
+            type="ru.orlovvv.weather.viewmodels.ForecastViewModel" />
 
     </data>
 
@@ -11,15 +14,12 @@
         android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:background="?attr/colorSurface"
+            android:minHeight="150dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SDADSASD"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

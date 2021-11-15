@@ -41,7 +41,8 @@
                         android:background="?attr/actionBarItemBackground"
                         android:clickable="true"
                         android:focusable="true"
-                        android:padding="12dp"
+                        android:paddingHorizontal="8dp"
+                        android:paddingVertical="12dp"
                         android:src="@drawable/ic_arrow_down"
                         app:layout_constraintStart_toEndOf="@id/tv_location"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -51,6 +52,7 @@
 
                     <com.google.android.material.textview.MaterialTextView
                         android:gravity="center"
+                        app:layout_constraintHorizontal_bias="0"
                         android:textColor="@color/white"
                         android:id="@+id/tv_location"
                         android:textAppearance="@style/TextAppearance.Weather.Body2"
@@ -58,7 +60,7 @@
                         android:layout_height="wrap_content"
                         android:text="Irkutsk"
                         android:textSize="20sp"
-                        android:layout_marginEnd="16dp"
+                        android:layout_marginHorizontal="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintBottom_toBottomOf="@id/btn_locations"
                         app:layout_constraintStart_toStartOf="parent"
@@ -91,7 +93,7 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
-            android:paddingHorizontal="24dp"
+            android:paddingHorizontal="4dp"
             style="@style/TabLayout.TabsStyle"
             app:tabMaxWidth="0dp"
             android:layout_width="0dp"
