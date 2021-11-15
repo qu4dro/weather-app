@@ -91,6 +91,12 @@ fun bindSpeed(textView: MaterialTextView, speed: Double) {
     textView.text = speedString
 }
 
+@BindingAdapter("locationName")
+fun bindLocationName(textView: MaterialTextView, fullName: String) {
+    val name = fullName.substringBefore(",")
+    textView.text = name
+}
+
 @BindingAdapter("max", "min")
 fun bindMaxAndMinTemp(textView: MaterialTextView, max: Double, min: Double) {
     val tempString =

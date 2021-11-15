@@ -13,6 +13,13 @@
         <item name="cardCornerRadius">4dp</item>
     </style>
 
+    <style name="CardViewStyle.Empty" parent="Widget.MaterialComponents.CardView">
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardCornerRadius">4dp</item>
+        <item name="cardBackgroundColor">@android:color/transparent</item>
+    </style>
+
     <style name="CardViewStyle.IconStyle" parent="Widget.MaterialComponents.CardView">
         <item name="cardPreventCornerOverlap">false</item>
         <item name="cardElevation">0dp</item>
