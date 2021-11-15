@@ -26,8 +26,7 @@ class ForecastViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private var _selectedLocation =
-        MutableLiveData<LocationCache>(LocationCache("", -2, 0.0, 0.0, "Irkutsk", "", ""))
+    private var _selectedLocation = forecastRepository.getMainLocation()
     val selectedLocation
         get() = _selectedLocation
 
@@ -41,8 +40,8 @@ class ForecastViewModel @Inject constructor(
         get() = _forecast
 
     // Locations list founded by search from server
-    private val _foundedLocations = MutableLiveData<Resource<SearchResponse>>()
-    val foundedLocations: LiveData<Resource<SearchResponse>>
+    private val _foundedLocations = MutableLiveData<Resource<List<LocationCache>>>()
+    val foundedLocations: LiveData<Resource<List<LocationCache>>>
         get() = _foundedLocations
 
     // Forecast history from server
@@ -52,13 +51,13 @@ class ForecastViewModel @Inject constructor(
 
     // Cached forecast data
     private val _forecastCache =
-        forecastRepository.getForecastCache(_selectedLocation.value?.id!!)
+        forecastRepository.getForecastCache(_selectedLocation.value?.id ?: -1)
     val forecastCache
         get() = _forecastCache
 
     // Cached history data
     private val _historyCache =
-        forecastRepository.getHistoryCache(_selectedLocation.value?.id!!)
+        forecastRepository.getHistoryCache(_selectedLocation.value?.id ?: -1)
     val historyCache
         get() = _historyCache
 
@@ -106,7 +105,7 @@ class ForecastViewModel @Inject constructor(
         }
     }
 
-    private fun handleSearchLocationResponse(response: Response<SearchResponse>): Resource<SearchResponse> {
+    private fun handleSearchLocationResponse(response: Response<List<LocationCache>>): Resource<List<LocationCache>> {
         if (response.isSuccessful) {
             response.body()?.let {
                 return Resource.Success(it)

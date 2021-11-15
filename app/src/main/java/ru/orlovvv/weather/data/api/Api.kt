@@ -3,6 +3,7 @@ package ru.orlovvv.weather.data.api
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
+import ru.orlovvv.weather.data.model.cache.LocationCache
 import ru.orlovvv.weather.data.model.responses.ForecastResponse
 import ru.orlovvv.weather.data.model.responses.HistoryResponse
 import ru.orlovvv.weather.data.model.responses.SearchResponse
@@ -21,11 +22,11 @@ interface Api {
         @Query("key") apiKey: String = API_KEY_PUBLIC
     ): Response<ForecastResponse>
 
-    @GET("forecast.json")
+    @GET("search.json")
     suspend fun searchLocation(
         @Query("q") searchQuery: String = "",
         @Query("key") apiKey: String = API_KEY_PUBLIC
-    ): Response<SearchResponse>
+    ): Response<List<LocationCache>>
 
     @GET("history.json")
     suspend fun getForecastHistory(

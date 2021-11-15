@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <variable
+            name="foreViewModel"
+            type="ru.orlovvv.weather.viewmodels.ForecastViewModel" />
 
     </data>
 
@@ -17,7 +20,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:endIconMode="clear_text"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,6 +27,7 @@
             app:startIconDrawable="@drawable/ic_search">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:textAppearance="@style/TextAppearance.Weather.Body1"
                 android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,6 +37,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            locationsList="@{foreViewModel.foundedLocations.data}"
             android:paddingBottom="64dp"
             android:clipToPadding="false"
             android:id="@+id/rv_founded_locations"
