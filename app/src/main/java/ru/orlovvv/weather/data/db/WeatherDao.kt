@@ -39,6 +39,18 @@ interface WeatherDao {
     @Query("SELECT * FROM locations ORDER BY isMain DESC LIMIT 1")
     fun getMainLocation(): LiveData<LocationCache>
 
+    @Query("UPDATE locations SET isMain = :isMain WHERE id = :id")
+    fun updateIsMain(isMain: Boolean, id: Int)
+
+    @Transaction
+    suspend fun updateMainLocation(
+        oldLocation: LocationCache,
+        newLocation: LocationCache
+    ) {
+        updateIsMain(false, oldLocation.id)
+        updateIsMain(true, newLocation.id)
+    }
+
     @Transaction
     suspend fun clearAndInsertForecastCache(
         forecastCache: ForecastCache

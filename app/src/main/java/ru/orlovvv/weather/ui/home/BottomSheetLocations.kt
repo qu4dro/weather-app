@@ -54,7 +54,7 @@ class BottomSheetLocations : BottomSheetDialogFragment(), LocationAdapter.Locati
     }
 
     override fun onClick(cardView: View, location: LocationCache) {
-        forecastViewModel.selectLocation(location)
+        forecastViewModel.setMainLocation(forecastViewModel.selectedLocation.value!!, location)
         this.dismiss()
     }
 }

@@ -1,9 +1,6 @@
 package ru.orlovvv.weather.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,18 +23,22 @@ class ForecastViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private var _selectedLocation =
-        MutableLiveData<LocationCache>(LocationCache("", -5, 0.0, 0.0, "Irkutsk", "", ""))
-    val selectedLocation
-        get() = _selectedLocation
-
+    // Locations data
     private var _savedLocations = forecastRepository.getLocationCache()
     val savedLocations
         get() = _savedLocations
 
+    private var _selectedLocation = forecastRepository.getMainLocation()
+    val selectedLocation
+        get() = _selectedLocation
+
+    private var _selectedLocationId: MutableLiveData<Int> =
+        MutableLiveData<Int>(selectedLocation.value?.id ?: -1)
+
     private var _searchQuery = MutableLiveData("")
     val searchQuery
         get() = _searchQuery
+    // ------------------------------------- //
 
     // Forecast from server
     private val _forecast = MutableLiveData<Resource<ForecastResponse>>()
@@ -55,21 +56,19 @@ class ForecastViewModel @Inject constructor(
         get() = _forecastHistory
 
     // Cached forecast data
-    private val _forecastCache =
-        forecastRepository.getForecastCache(_selectedLocation.value?.id ?: -1)
+    private val _forecastCache = Transformations.switchMap(_selectedLocationId) {
+        forecastRepository.getForecastCache(it)
+    }
     val forecastCache
         get() = _forecastCache
 
     // Cached history data
     private val _historyCache =
-        forecastRepository.getHistoryCache(_selectedLocation.value?.id ?: -1)
+        Transformations.switchMap(_selectedLocationId) {
+            forecastRepository.getHistoryCache(it)
+        }
     val historyCache
         get() = _historyCache
-
-    init {
-        _selectedLocation.value?.let { getForecast(it.name) }
-        _selectedLocation.value?.let { getForecastHistory(it.name) }
-    }
 
     /* Network requests */
     fun getForecast(locationName: String? = _selectedLocation.value?.name) =
@@ -173,12 +172,19 @@ class ForecastViewModel @Inject constructor(
         }
     }
 
+    fun setSelectedLocationId(id: Int) {
+        _selectedLocationId.value = id
+    }
+
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
     }
 
-    fun selectLocation(location: LocationCache) {
-        _selectedLocation.value = location
+    fun setMainLocation(
+        oldLocation: LocationCache,
+        newLocation: LocationCache
+    ) = viewModelScope.launch {
+        forecastRepository.updateMainLocation(oldLocation, newLocation)
     }
 
     fun insertLocation(location: LocationCache) = viewModelScope.launch {

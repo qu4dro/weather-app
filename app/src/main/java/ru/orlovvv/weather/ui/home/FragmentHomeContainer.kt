@@ -28,7 +28,9 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     private val forecastViewModel: ForecastViewModel by activityViewModels()
 
-    private var dropDownIsVisible = false
+    override fun onStart() {
+        super.onStart()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,10 +54,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
             btnLocations.setOnClickListener { showDialog() }
             tvLocation.setOnClickListener { showDialog() }
             swipeRefresh.setOnRefreshListener {
-                forecastViewModel.apply {
-                    getForecast()
-                    getForecastHistory()
-                }
+                getUpdatesFromNetwork()
             }
         }
         setPager()
@@ -65,7 +64,10 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     private fun setupObservers() {
 
         forecastViewModel.selectedLocation.observe(viewLifecycleOwner, Observer {
-            Timber.d("NEW LOCATION$it")
+            if (it != null) {
+                forecastViewModel.setSelectedLocationId(it.id)
+                getUpdatesFromNetwork()
+            }
         })
 
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { response ->
@@ -147,6 +149,13 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     private fun showDialog() {
         val bottomSheet = BottomSheetLocations()
         bottomSheet.show(childFragmentManager, BottomSheetLocations.TAG)
+    }
+
+    private fun getUpdatesFromNetwork() {
+        forecastViewModel.apply {
+            getForecast()
+            getForecastHistory()
+        }
     }
 
     override fun onDestroyView() {
