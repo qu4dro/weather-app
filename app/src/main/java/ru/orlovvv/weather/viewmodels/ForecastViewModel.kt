@@ -26,9 +26,14 @@ class ForecastViewModel @Inject constructor(
     private val networkHelper: NetworkHelper
 ) : ViewModel() {
 
-    private var _selectedLocation = forecastRepository.getMainLocation()
+    private var _selectedLocation =
+        MutableLiveData<LocationCache>(LocationCache("", -5, 0.0, 0.0, "Irkutsk", "", ""))
     val selectedLocation
         get() = _selectedLocation
+
+    private var _savedLocations = forecastRepository.getLocationCache()
+    val savedLocations
+        get() = _savedLocations
 
     private var _searchQuery = MutableLiveData("")
     val searchQuery
@@ -170,6 +175,14 @@ class ForecastViewModel @Inject constructor(
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
+    }
+
+    fun selectLocation(location: LocationCache) {
+        _selectedLocation.value = location
+    }
+
+    fun insertLocation(location: LocationCache) = viewModelScope.launch {
+        forecastRepository.insertLocationCache(location)
     }
 
 }

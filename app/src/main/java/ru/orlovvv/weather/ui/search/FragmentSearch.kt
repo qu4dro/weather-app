@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -15,13 +17,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ru.orlovvv.weather.R
 import ru.orlovvv.weather.adapters.LocationAdapter
+import ru.orlovvv.weather.data.model.cache.LocationCache
 import ru.orlovvv.weather.databinding.FragmentSearchBinding
 import ru.orlovvv.weather.utils.Resource
 import ru.orlovvv.weather.viewmodels.ForecastViewModel
 import timber.log.Timber
 
 @AndroidEntryPoint
-class FragmentSearch : Fragment(R.layout.fragment_search) {
+class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.LocationAdapterListener {
 
     private var _binding: FragmentSearchBinding? = null
     val binding
@@ -49,9 +52,9 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
         binding.apply {
             lifecycleOwner = this@FragmentSearch
             foreViewModel = forecastViewModel
-            rvFoundedLocations.adapter = LocationAdapter(isSaved = false)
+            rvFoundedLocations.adapter = LocationAdapter(this@FragmentSearch, isSaved = false)
             etSearch.addTextChangedListener {
-                if(it.toString().isNotEmpty()) {
+                if (it.toString().isNotEmpty()) {
                     forecastViewModel.setSearchQuery(it.toString())
                 }
             }
@@ -100,6 +103,12 @@ class FragmentSearch : Fragment(R.layout.fragment_search) {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onClick(cardView: View, location: LocationCache) {
+        forecastViewModel.insertLocation(location)
+        findNavController().navigateUp()
+        Toast.makeText(requireContext(), R.string.app_name, Toast.LENGTH_SHORT).show()
     }
 
 }

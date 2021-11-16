@@ -47,6 +47,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     private fun setupUI() {
         binding.apply {
+            lifecycleOwner = this@FragmentHomeContainer
             foreViewModel = forecastViewModel
             btnLocations.setOnClickListener { showDialog() }
             tvLocation.setOnClickListener { showDialog() }
@@ -64,7 +65,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
     private fun setupObservers() {
 
         forecastViewModel.selectedLocation.observe(viewLifecycleOwner, Observer {
-
+            Timber.d("NEW LOCATION$it")
         })
 
         forecastViewModel.forecast.observe(viewLifecycleOwner, Observer { response ->
