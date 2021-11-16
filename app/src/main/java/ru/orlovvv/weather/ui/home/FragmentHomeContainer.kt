@@ -4,12 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.doOnPreDraw
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.transition.MaterialElevationScale
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import ru.orlovvv.weather.R
 import ru.orlovvv.weather.adapters.HomeSlidePagerAdapter
@@ -28,8 +32,20 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     private val forecastViewModel: ForecastViewModel by activityViewModels()
 
-    override fun onStart() {
-        super.onStart()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exitTransition = MaterialSharedAxis(
+            MaterialSharedAxis.X,
+            /* forward= */ true
+        ).apply {
+            duration = resources.getInteger(R.integer.motion_duration_large).toLong()
+        }
+        reenterTransition = MaterialSharedAxis(
+            MaterialSharedAxis.X,
+            /* forward= */ false
+        ).apply {
+            duration =resources.getInteger(R.integer.motion_duration_large).toLong()
+        }
     }
 
     override fun onCreateView(
@@ -43,6 +59,10 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        postponeEnterTransition()
+        view.doOnPreDraw { startPostponedEnterTransition() }
+
         setupUI()
         setupObservers()
     }
@@ -51,8 +71,7 @@ class FragmentHomeContainer : Fragment(R.layout.fragment_home_container) {
         binding.apply {
             lifecycleOwner = this@FragmentHomeContainer
             foreViewModel = forecastViewModel
-            btnLocations.setOnClickListener { showDialog() }
-            tvLocation.setOnClickListener { showDialog() }
+            cvLocations.setOnClickListener { showDialog() }
             swipeRefresh.setOnRefreshListener {
                 getUpdatesFromNetwork()
             }

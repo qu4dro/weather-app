@@ -22,5 +22,8 @@
     <string name="wind">Wind</string>
     <string name="kmh">km/h</string>
     <string name="hourly_forecast">Hourly forecast</string>
+    <string name="find_new_location">Find new location</string>
+    <string name="new_location">Added new location: %1$s</string>
+    <string name="find_location">Find location</string>
 
 </resources>

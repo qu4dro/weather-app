@@ -1,15 +1,19 @@
 package ru.orlovvv.weather.ui.search
 
 import android.os.Bundle
+import android.transition.Slide
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.doOnPreDraw
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
@@ -32,6 +36,22 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
 
     private val forecastViewModel: ForecastViewModel by activityViewModels()
     private var job: Job? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enterTransition = MaterialSharedAxis(
+            MaterialSharedAxis.X,
+            /* forward= */ true
+        ).apply {
+            duration = resources.getInteger(R.integer.motion_duration_large).toLong()
+        }
+        returnTransition = MaterialSharedAxis(
+            MaterialSharedAxis.X,
+            /* forward= */ false
+        ).apply {
+            duration = resources.getInteger(R.integer.motion_duration_large).toLong()
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -58,6 +78,7 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
                     forecastViewModel.setSearchQuery(it.toString())
                 }
             }
+            ibBack.setOnClickListener { findNavController().navigateUp() }
         }
     }
 
@@ -108,7 +129,11 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
     override fun onClick(cardView: View, location: LocationCache) {
         forecastViewModel.insertLocation(location)
         findNavController().navigateUp()
-        Toast.makeText(requireContext(), R.string.app_name, Toast.LENGTH_SHORT).show()
+        Toast.makeText(
+            requireContext(),
+            requireContext().getString(R.string.new_location, location.name),
+            Toast.LENGTH_SHORT
+        ).show()
     }
 
 }

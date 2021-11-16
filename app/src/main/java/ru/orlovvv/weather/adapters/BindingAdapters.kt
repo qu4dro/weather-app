@@ -92,9 +92,14 @@ fun bindSpeed(textView: MaterialTextView, speed: Double) {
 }
 
 @BindingAdapter("locationName")
-fun bindLocationName(textView: MaterialTextView, fullName: String) {
-    val name = fullName.substringBefore(",")
-    textView.text = name
+fun bindLocationName(textView: MaterialTextView, fullName: String?) {
+    if (fullName == null) {
+        textView.text = Res.getString(R.string.select_location)
+    } else {
+        val name = fullName.substringBefore(",")
+        textView.text = name
+    }
+
 }
 
 @BindingAdapter("max", "min")
