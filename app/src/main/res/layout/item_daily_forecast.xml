@@ -12,11 +12,11 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        style="@style/CardViewStyle.SquareFlat"
+        style="@style/CardViewStyle.BaseCardStyle2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="4dp"
-        android:layout_marginTop="4dp">
+        android:layout_marginBottom="8dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

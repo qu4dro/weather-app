@@ -7,10 +7,10 @@
         <item name="cardCornerRadius">28dp</item>
     </style>
 
-    <style name="CardViewStyle.SquareFlat" parent="Widget.MaterialComponents.CardView">
+    <style name="CardViewStyle.BaseCardStyle2" parent="Widget.MaterialComponents.CardView">
         <item name="cardPreventCornerOverlap">false</item>
         <item name="cardElevation">0dp</item>
-        <item name="cardCornerRadius">4dp</item>
+        <item name="cardCornerRadius">28dp</item>
     </style>
 
     <style name="CardViewStyle.Empty" parent="Widget.MaterialComponents.CardView">

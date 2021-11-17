@@ -17,6 +17,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:paddingBottom="64dp"
+            android:paddingTop="8dp"
             android:clipToPadding="false"
             android:id="@+id/rv_daily_forecast"
             daysList="@{foreViewModel.forecastCache.forecast.forecastday}"

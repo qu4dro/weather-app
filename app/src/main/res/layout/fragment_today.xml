@@ -107,7 +107,7 @@
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/cv_today"
-                style="@style/CardViewStyle.SquareFlat"
+                style="@style/CardViewStyle.BaseCardStyle2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
