@@ -246,5 +246,8 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
         ).show()
     }
 
+    override fun onPopupClick(imageButton: View, location: LocationCache) {
+    }
+
 
 }

@@ -31,31 +31,48 @@
                 locationName="@{location.name}"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
                 android:textAppearance="@style/TextAppearance.Weather.Headline5"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ib_popup"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Irkutsk" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_region"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{location.region}"
                 android:textAppearance="@style/TextAppearance.Weather.Body2"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_name"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
                 tools:text="Area name" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/tv_country"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:text="@{location.country}"
                 android:textAppearance="@style/TextAppearance.Weather.Body2"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/tv_name"
+                app:layout_constraintStart_toStartOf="@id/tv_name"
                 app:layout_constraintTop_toBottomOf="@id/tv_region"
                 tools:text="Russia" />
+
+            <ImageButton
+                android:id="@+id/ib_popup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:background="?attr/actionBarItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="@{(view) -> listener.onPopupClick(view,location)}"
+                android:padding="12dp"
+                android:src="@drawable/ic_more"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

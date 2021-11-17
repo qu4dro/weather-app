@@ -35,6 +35,8 @@ class ForecastRepository @Inject constructor(
         newLocation: LocationCache
     ) = weatherDao.updateMainLocation(oldLocation, newLocation)
 
+    suspend fun deleteLocation(id: Int) = weatherDao.deleteLocation(id)
+
     fun getForecastCache(id: Int) = weatherDao.getForecastCache(id)
     fun getHistoryCache(id: Int) = weatherDao.getHistoryCache(id)
     fun getLocationCache() = weatherDao.getLocationsCache()

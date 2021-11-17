@@ -18,6 +18,7 @@ class LocationAdapter(
 
     interface LocationAdapterListener {
         fun onClick(cardView: View, location: LocationCache)
+        fun onPopupClick(imageButton: View, location: LocationCache)
     }
 
     class LocationSavedViewHolder(

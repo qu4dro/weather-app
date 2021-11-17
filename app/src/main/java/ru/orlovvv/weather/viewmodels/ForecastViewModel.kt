@@ -188,7 +188,14 @@ class ForecastViewModel @Inject constructor(
     }
 
     fun insertLocation(location: LocationCache) = viewModelScope.launch {
+        if (_savedLocations.value?.size == 0) {
+            location.isMain = true
+        }
         forecastRepository.insertLocationCache(location)
+    }
+
+    fun deleteLocation(id: Int) = viewModelScope.launch {
+        forecastRepository.deleteLocation(id)
     }
 
 }
