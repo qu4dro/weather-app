@@ -21,9 +21,6 @@
         android:label="FragmentHomeContainer"
         tools:layout="@layout/fragment_home_container">
         <action
-            android:id="@+id/action_fragmentHomeContainer_to_fragmentLocations"
-            app:destination="@id/fragmentLocations" />
-        <action
             android:id="@+id/action_fragmentHomeContainer_to_fragmentSearch"
             app:destination="@id/fragmentSearch" />
     </fragment>
@@ -33,17 +30,8 @@
         android:label="FragmentToday"
         tools:layout="@layout/fragment_today" />
     <fragment
-        android:id="@+id/fragmentLocations"
-        android:name="ru.orlovvv.weather.ui.locations.FragmentLocations"
-        android:label="FragmentLocations"
-        tools:layout="@layout/fragment_locations" />
-    <fragment
         android:id="@+id/fragmentSearch"
         android:name="ru.orlovvv.weather.ui.search.FragmentSearch"
         android:label="FragmentSearch"
-        tools:layout="@layout/fragment_search">
-        <action
-            android:id="@+id/action_fragmentSearch_to_fragmentHomeContainer"
-            app:destination="@id/fragmentHomeContainer" />
-    </fragment>
+        tools:layout="@layout/fragment_search"/>
 </navigation>
