@@ -129,7 +129,7 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
     private fun findLocation(searchQuery: String) {
         job?.cancel()
         if (searchQuery.isEmpty()) {
-            forecastViewModel.searchLocation(searchQuery)
+            //forecastViewModel.setSearchQuery(searchQuery)
         } else {
             job = MainScope().launch {
                 delay(500L)
@@ -224,6 +224,11 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
+    }
+
+    override fun onStop() {
+        forecastViewModel.setSearchQuery("")
+        super.onStop()
     }
 
     override fun onDestroyView() {
