@@ -15,4 +15,8 @@ object Constants {
 
     const val DATE_PATTERN_WITHOUT_HOURS = "yyyy-MM-dd"
 
+    const val LOCATION_UPDATE_INTERVAL = 60000L
+    const val FASTEST_LOCATION_INTERVAL = LOCATION_UPDATE_INTERVAL / 4
+    const val REQUEST_CODE_LOCATION_PERMISSION = 0
+
 }
