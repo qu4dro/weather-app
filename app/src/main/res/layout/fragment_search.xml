@@ -79,6 +79,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
+            app:endIconDrawable="@drawable/ic_my_location"
+            app:endIconMode="custom"
             app:layout_constraintBottom_toTopOf="@id/rv_founded_locations"
             app:layout_constraintEnd_toEndOf="@id/guideline_right"
             app:layout_constraintStart_toStartOf="@id/guideline_left"
@@ -96,14 +98,6 @@
                 app:hintAnimationEnabled="true" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.button.MaterialButton
-            app:layout_constraintEnd_toEndOf="parent"
-            android:id="@+id/btn_my_location"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_founded_locations"

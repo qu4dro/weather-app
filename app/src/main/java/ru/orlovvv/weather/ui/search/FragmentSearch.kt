@@ -92,9 +92,8 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
                 }
             }
             ibBack.setOnClickListener { findNavController().navigateUp() }
-            btnMyLocation.setOnClickListener {
-                checkGpsEnabled()
-                requestPermissions()
+            tilSearch.setEndIconOnClickListener {
+                getCurrentLocation()
             }
         }
     }
@@ -139,22 +138,27 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
         }
     }
 
-    private fun checkGpsEnabled() {
+    private fun getCurrentLocation() {
+        checkGpsIsEnabled()
+        requestPermissionsAndLocationUpdates()
+    }
+
+    private fun checkGpsIsEnabled(): Boolean {
         val lm: LocationManager =
             requireContext().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
         try {
             coordinatesViewModel.isGpsEnabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
         } catch (ex: Exception) {
-
+            Timber.d("Can't get gps status")
         }
-
         if (!coordinatesViewModel.isGpsEnabled) {
-            Timber.d("123123123123123123")
+            Timber.d("Gps is not enabled")
+            return false
         }
+        return true
     }
 
-    private fun requestPermissions() {
+    private fun requestPermissionsAndLocationUpdates() {
         if (LocationUtility.hasLocationPermissions(requireContext())) {
             Timber.d("LOCATION UPDATES")
             requestLocationUpdates()
@@ -209,7 +213,7 @@ class FragmentSearch : Fragment(R.layout.fragment_search), LocationAdapter.Locat
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             AppSettingsDialog.Builder(this).build().show()
         } else {
-            requestPermissions()
+            requestPermissionsAndLocationUpdates()
         }
     }
 
